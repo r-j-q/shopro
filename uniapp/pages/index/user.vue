@@ -52,11 +52,12 @@
 				12000	
 				</view>
 				<view class="order_dingdang_right_text1">
-				 积分	
+				 元宝	
 				</view>
 			</view>
 		</view>
-		<view class="order_dingdang">
+	 
+		<!-- <view class="order_dingdang">
 			<view class="order_dingdang_left">
 				 
 				<view class="order_dingdang_left_text">
@@ -69,6 +70,10 @@
 				 任务订单	
 				</view>
 			</view>
+		</view> -->
+		<sh-grid-sh :list="itemContentList2"></sh-grid-sh>
+		<view class="lineStyle">
+			
 		</view>
 		<sh-grid :list="itemContentList"></sh-grid>
 		<!-- copyright -->
@@ -97,6 +102,7 @@
 	import shRichtext from './components/sh-richtext.vue';
 	import shCell from './components/sh-cell.vue';
 	import shGrid from './components/sh-grid.vue';
+	import shGridSh from './components/sh-grid-sh.vue';
 	// import shOrderCard from './componentsA/sh-order-card.vue';
 	import shWallet from './components/sh-wallet.vue';
 	import shHotGoods from './components/sh-hot-goods.vue';
@@ -120,6 +126,7 @@
 			shRichtext,
 			shCell,
 			shGrid,
+			shGridSh,
 			shWallet,
 			// shOrderCard,
 			shHotGoods,
@@ -131,37 +138,56 @@
 				scrollTop: 0,
 				showShare: false,
 				enable: false, //是否开启吸顶。
-				itemContentList: [{
-						name: "个人信息",
-						image: require("../../static/images/mipmap-xhdpi/ic_gerenxinxi.webp")
+				itemContentList2: [{
+						name: "待付款",
+						image: require("../../static/images/mine/d1.png")
 					},
 					{
-						name: "增值服务",
-						image: require("../../static/images/mipmap-xhdpi/ic_mine_service.webp")
+						name: "待发货",
+						image: require("../../static/images/mine/d2.png")
+					},
+					{
+						name: "待收货",
+						image: require("../../static/images/mine/d3.png")
+					},
+					{
+						name: "退换货",
+						image: require("../../static/images/mine/d4.png")
+					}  
+				],
+				itemContentList: [
+					{
+						name: "课程中心",
+						image: require("../../static/images/mine/m7.png")
+					}, 
+					{
+						name: "考试中心",
+						image: require("../../static/images/mine/m5.png")
+					},
+					 {
+					 	name: "推广中心",
+					 	image: require("../../static/images/mine/m8.png")
+					 },
+					{
+						name: "订单",
+						image: require("../../static/images/mine/m2.png")
+					},
+					 {
+					 	name: "个人信息",
+					 	image: require("../../static/images/mine/m4.png")
+					 },
+					{
+						name: "学员兑换",
+						image: require("../../static/images/mine/m3.png")
 					},
 					{
 						name: "联系客服",
-						image: require("../../static/images/mipmap-xhdpi/ic_lianxikefu.webp")
+						image: require("../../static/images/mine/m6.png")
 					},
-					{
-						name: "订单",
-						image: require("../../static/images/mipmap-xhdpi/ic_dingdan.webp")
-					},
-					{
-						name: "课程中心",
-						image: require("../../static/images/mipmap-xhdpi/ic_xuexizhongxin.webp")
-					},
-					{
-						name: "学员兑换",
-						image: require("../../static/images/mipmap-xhdpi/ic_xueyuanduihuan.webp")
-					},
-					{
-						name: "推广中心",
-						image: require("../../static/images/mipmap-xhdpi/ic_tuiguangzhongxin.webp")
-					},
+					 
 					{
 						name: "收藏",
-						image: require("../../static/images/mipmap-xhdpi/ic_mine_shoucang.webp")
+						image: require("../../static/images/mine/m9.png")
 					},
 				]
 			};
@@ -213,6 +239,13 @@
 <style lang="scss" scoped>
 	.mt50{
 		margin-top: 180rpx;
+	}
+	.lineStyle{
+		width: 674rpx;
+		height: 2rpx;
+		background: #000000;
+		opacity: 0.05;
+		margin: 50rpx auto;
 	}
 	.personal-wrap{
 		min-height: 100%;

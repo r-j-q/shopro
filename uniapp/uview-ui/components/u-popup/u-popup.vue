@@ -129,7 +129,7 @@ export default {
 		popup: {
 			type: Boolean,
 			default: true
-		},
+		}, 
 		// 显示显示弹窗的圆角，单位rpx
 		borderRadius: {
 			type: [Number, String],

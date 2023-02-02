@@ -208,7 +208,7 @@
         "appid" : ""
     },
     "h5" : {
-        "template" : "template.h5.html",
+        "template" : "",
         "router" : {
             "mode" : "history",
             "base" : "/h5/"

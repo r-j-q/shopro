@@ -1,5 +1,5 @@
 <template>
-	<view :class="['o-empty']" :style="Bg">
+	<view :class="['o-empty']" :style="bg">
 		<image :style="ImgSize" :src="Img" mode="aspectFit"></image>
 		<view class="text">{{text}}</view>
 		<view class="slot" v-if="$slots.default"> <slot></slot> </view>
@@ -23,7 +23,7 @@
 				type:String,
 				default:''
 			},
-			imgSize:{
+			ImgSize:{
 				type:String,
 				default:'320'
 			},

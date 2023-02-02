@@ -35,7 +35,7 @@
 			  	<view class="colorC m20"><h6>橱销≥0</h6> </view>
 			  	<view class="colorC m20"><h6>积分≥500.0</h6> </view>
 			  </view>
-			  <view class="goodsListbottomRightRight">
+			  <view class="goodsListbottomRightRight" @click.stop="getGoods">
 			  	 <view class="buttomOver">
 			  	 	已领完
 			  	 </view>
@@ -59,6 +59,9 @@
 
 
 		methods: {
+			getGoods(){
+				this.$emit("getCodeGoods")
+			},
              nagatorToDetail(){
 				uni.navigateTo({
 					url:"/pages/dkdetail/detail"

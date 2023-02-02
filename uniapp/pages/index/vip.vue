@@ -12,22 +12,38 @@
 						<view @click="searchTextList" class="mission-list-title"> 搜索的商品 </view>
 					</view>
 				</view>
-				<button @click="navigatorToLine" class="mission-r">我的</button>
+				<button @click="navigatorToLine" class="mission-r">赚元宝</button>
 			</view>
 			<view class="mission-content-swiper">
 				<u-swiper height="300" :list="list"></u-swiper>
 			</view>
 			<view class="mission-center">
-				<view class="mission-center-center">
-					<view class="center1  borderL1" @click="tabActive(item)" :class="current == index ?'bgcolor':''"
-						v-for="(item,index) in listTabs" :key="index">
-						{{item.name}}
-					</view>
-
-				</view> 
+				 <shType @handleShowMore="handleShowMore"/>
+				 
 			</view>
 		</view>
+		<shTypeBtn/>
 		<goodsList /> 
+		
+		<!-- 领取弹窗 -->
+		<u-popup v-model="isHandleShowMore" :borderRadius="0" mode="top" >
+			<view class="isHandleShowMorePadding">
+				 <shTypeBtn/>
+				 <view class="isMorePaddingList">
+				 	<view @click.stop="getIsMorePaddingList(flag)" class="isMorePstyle" :class="flag.id==typeId?'isMoreBackground':''" v-for="(flag,i) in listTabs" :key="i">{{flag.name}}</view>
+				 	 
+				 </view>
+				 <view class="isMorePaddingBottom">
+				 	<view class="isMorePaddingBottom0">
+				 		重置
+				 	</view>
+					<view class="isMorePaddingBottom1">
+						完成
+					</view>
+					
+				 </view>
+			</view>
+		</u-popup>
 	</view>
 </template>
 
@@ -38,17 +54,23 @@
 		mapState
 	} from 'vuex';
 	import goodsList from '../../components/juzheng/taskHallDetails/goodsList.vue';
-
+	import shType from '../../components/juzheng/taskHallDetails/sh-type.vue';
+	import shTypeBtn from '../../components/juzheng/taskHallDetails/sh-type-btn.vue';
+ 
 	let systemInfo = uni.getSystemInfoSync();
 	export default {
 		components: {
-			goodsList
+			goodsList,
+			shType,
+			shTypeBtn
 		},
 		data() {
 			return {
+				isHandleShowMore:false,//更多类型弹窗
 				searchText: false,
 
 				keyword: '',
+				typeId:0,//更多类型ID
 				listTabs: [{
 					name: '全部',
 					id:0
@@ -89,16 +111,22 @@
 			searchTextList() {
 				this.searchText = !this.searchText
 			},
-			tabActive(item) {
-				this.current = item.id
-			},
+			 
 			navigatorToLine() {
 				uni.navigateTo({
 					url:"/pages/dkdetail/rwOrder"
 				})
 				console.log("9999")
 			},
-
+			//显示更多类型
+			handleShowMore(){
+				this.isHandleShowMore= ! this.isHandleShowMore
+			},
+			// 点击更多类型
+			getIsMorePaddingList(v){
+				 this.typeId = v.id
+			}
+            
 		}
 
 	};
@@ -108,42 +136,15 @@
 	.paddingTop20{
 		padding-top: 20upx;
 	}
-	.mission-center-center {
-		width: 500upx;
-		height: 100upx;
-		margin: 0 auto;
-		background-color: #f5f5f5;
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		justify-content: space-between;
-		border-radius: 50upx;
-
-	}
-
-	.center1 {
-		width: 250upx;
-		height: 100upx;
-		text-align: center;
-		line-height: 100upx;
-		color: #999;
-		font-size: 30upx;
-
-	}
+	  
 
 	.mission-content-swiper {
 		margin-top: 40upx;
 	}
 
-	.bgcolor {
-		background-color: #7C75F5;
-		color: #fff;
+	 
 
-	}
-
-	.borderL1 {
-		border-radius: 50upx;
-	}
+	 
 
 	.mission-list {
 		width: 100%;
@@ -159,7 +160,7 @@
 
 	.mission-content {
 		// height: 332upx;
-		padding:80upx 20upx 60upx 20upx;
+		padding:80upx 20upx 24upx 20upx;
 		background: linear-gradient(90deg, #F3E5F6, #E7E5FB);
 
 		.mission-center {
@@ -235,7 +236,7 @@
 		flex-direction: row;
 
 		.mission-l {
-			width: 100%;
+			width: 77%;
 			position: relative;
 		}
 
@@ -255,5 +256,59 @@
 			color: #7C75F5;
 
 		}
+	}
+	// 弹窗里面筛选内容
+	.isHandleShowMorePadding{
+		padding: 40upx;
+	}
+	.isMorePaddingList{
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		width: 100%;
+		margin-top: 20upx;
+		padding-top: 20upx;
+		border-top: 1px solid #f5f5f5;
+	}
+	.isMorePstyle{
+		background-color: #f5f5f5;
+		color: #000;
+		font-size: 26upx;
+		padding: 14upx 40upx;
+		margin-bottom: 20upx;
+		border-radius: 8upx;
+	}
+	.isMorePaddingBottom{
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		margin-top: 60upx;
+	}
+	.isMorePaddingBottom0{
+		font-size: 26upx;
+		color: #333;
+		border-radius: 16upx;
+		width: 48%;
+		background-color: #f5f5f5;
+		text-align: center;
+		padding: 20upx 0;
+	}
+	.isMorePaddingBottom1{
+		font-size: 26upx;
+		font-size: 26upx;
+		background-color: #7C75F5;
+		border-radius: 16upx;
+		color: #fff;
+		width: 48%;
+		text-align: center;
+		padding: 20upx 0;
+		
+	}
+	.isMoreBackground{
+		background-color: #E7E5FB;
+		color: #7C75F5;
 	}
 </style>

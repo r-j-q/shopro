@@ -1064,14 +1064,15 @@
 			{
 				"pagePath": "pages/index/missionHall",
 				"text": "任务大厅",
-				"iconPath": "static/images/tabbar/tabbar_category.png",
-				"selectedIconPath": "/static/images/tabbar/tabbar_category1.png"
+				 "iconPath": "static/images/tabbar/tabbar_cart.png",
+				 "selectedIconPath": "/static/images/tabbar/tabbar_cart1.png"
 			},
 			{
 				"pagePath": "pages/index/vip",
 				"text": "会员专区",
-				"iconPath": "static/images/tabbar/tabbar_cart.png",
-				"selectedIconPath": "/static/images/tabbar/tabbar_cart1.png"
+				"iconPath": "static/images/tabbar/tabbar_category.png",
+				"selectedIconPath": "/static/images/tabbar/tabbar_category1.png"
+				 
 			},
 			{
 				"pagePath": "pages/index/user",

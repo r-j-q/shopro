@@ -52,8 +52,8 @@
 							<view class="info-box-position-absolute">
 								<view class="info-box-position0">
 									<view class="info-box-position1">
-										<view class="info-box-position1-1 margin-bottom"> 普通会员</view>
-										<view class="info-box-position1-2"> 使用所有软件功能，享专属特权</view>
+										<view class="info-box-position1-1 margin-bottom"> 超级团长</view>
+										<view class="info-box-position1-2"> 使用所有软件功能，享专属特权！</view>
 									</view>
 									<view class="info-box-position2" @click.stop="infoJump('toUpgrade')">
 										去升级
@@ -258,13 +258,13 @@
 	}
 
 	.info-box-position1-1 {
-		color: #fff;
+		color: #E7E5FB;
 		font-size: 32rpx;
 		font-weight: bold;
 	}
 
 	.info-box-position1-2 {
-		color: #fff;
+		color: #E7E5FB;
 		font-size: 28rpx;
 	}
 	.info-box-position2{

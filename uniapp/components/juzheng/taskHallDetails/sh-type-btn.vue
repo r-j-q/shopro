@@ -1,0 +1,99 @@
+<template>
+	<view class="zuiwaicheng">
+	<view class="mission-center-center">
+		<view class="center1  borderL1" @click="tabActive(item)" :class="current == index ?'bgcolor':''"
+			v-for="(item,index) in listTabs" :key="index">
+			{{item.name}}
+		</view>
+	</view>
+	</view>
+</template>
+
+<script>
+	/**
+	 * 自定义之广告魔方
+	 * @property {Object} detail -广告魔方信息
+	 */
+	export default {
+		components: {},
+		data() {
+			return {
+				listTabs: [{
+					name: '综合',
+					id: 0
+				}, {
+					name: '佣金',
+					id: 1
+				}, {
+					name: "上架时间",
+					id: 2
+				}, {
+					name: "积分",
+					id: 3
+				}, {
+					name: "筛选",
+					id: 4
+				}],
+				current: 0,
+			};
+		},
+		props: {
+			detail: {}
+		},
+		computed: {},
+		created() {},
+		methods: {
+			tabActive(item) {
+				this.current = item.id
+			},
+			// 路由跳转
+			jump(path) {
+				this.$tools.routerTo(path);
+			}
+		}
+	};
+</script>
+
+<style lang="scss" scoped>
+	.zuiwaicheng{
+			padding: 20upx 0;
+			background-color: #fff;
+	}
+	.mission-center-center {
+		width: 88%;
+		// height: 100upx;
+		margin: 0 auto;
+		 
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+	 
+	 
+
+	}
+
+
+	.center1 {
+		font-size: 26upx;
+		text-align: center;
+		color: #999;
+		padding: 6upx 24upx;
+
+	}
+
+	.borderL1 {
+		border-radius: 50upx;
+	}
+
+	.bgcolor {
+		background-color: #F3E5F6;
+		color: #7C75F5;
+
+	}
+
+	.centerImages {
+		width: 30upx;
+		height: 30upx;
+	}
+</style>

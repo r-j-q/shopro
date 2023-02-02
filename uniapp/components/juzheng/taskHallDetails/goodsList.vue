@@ -10,15 +10,17 @@
 					<view class="goodsListTopTextLeft">
 						<view class="goodsListTopTitle ellipsis2">{{item.title}} </view>
 						<view class="goodsListTopTextrow">
-							<view class="goodsListjy m20">
+							<view class="goodsListjy m20 fantasize2">
 								<view class="as1">¥{{item.monly}} </view>
-								<view class="as2">佣金{{item.yongjin}}% </view>
+								 
 							</view>
-							<view class="goodsListTopTextRight" :class="item.likeActive?'goodsListTopTextRightlike':''"
+							
+							<view class="as2 m22 fantasize2">20元宝 佣金{{item.yongjin}}% </view>
+							<!-- <view class="goodsListTopTextRight" :class="item.likeActive?'goodsListTopTextRightlike':''"
 								@click.stop="likeSave(item,index)">
 								<u-icon name="heart-fill" :color="item.likeActive ?'#7C75F5':'#F3E5F6'" size="40">
 								</u-icon>
-							</view>
+							</view> -->
 						</view>
 					</view>
 				</view>
@@ -173,12 +175,15 @@
 		overflow: hidden;
 		margin-bottom: 30upx;
 	}
-
+.fantasize2{
+	font-size: 1vw;
+}
 
 	.goodsListjy {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
+		justify-content: space-between;
 		color: #7972a8;
 		font-size: 12px;
 	}
@@ -269,6 +274,9 @@
 	.m20 {
 		margin-top: 20upx;
 
+	}
+	.m22{
+		margin-top: 26upx;
 	}
 
 	.colorC {
