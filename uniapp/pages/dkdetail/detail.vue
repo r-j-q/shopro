@@ -1,6 +1,6 @@
 <template>
 	<view>
-		 
+
 		<!-- 轮播 -->
 		<view class="detaiLunBo">
 			<u-swiper height="600" :list="list"></u-swiper>
@@ -8,7 +8,7 @@
 				<u-icon name="arrow-left" size="40rpx"></u-icon>
 			</view>
 		</view>
-		 
+
 		<!-- 标题 -->
 		<view class="detailTitle bcg">
 			<h3>杨先生黑芝麻芡实糕八珍杨先生黑芝麻芡实糕八珍杨先生黑芝麻芡实糕八珍</h3>
@@ -131,20 +131,25 @@
 					一键剪辑
 				</view>
 			</view>
-			<view class="footerShare1 bacf5">
+			<view class="footerShare1 bacf5" @tap="handleClickCopy('9999')">
 				<view class="footerShare2">
 					复制商品链接
 				</view>
 
 			</view>
 		</view>
+
+
+		<u-toast ref="uToastDetail"></u-toast>
 	</view>
 </template>
 
 <script>
 	export default {
 
+		components: {
 
+		},
 		data() {
 			return {
 				list: [{
@@ -167,6 +172,19 @@
 
 			nativeGetTo() {
 				uni.navigateBack()
+			},
+			handleClickCopy(content) {
+				let _this = this;
+				uni.setClipboardData({
+					data: String(content), // 必须字符串
+					success: function() {
+						_this.$refs.uToastDetail.show({
+							title: "复制成功",
+							position: 'bottom'
+
+						})
+					}
+				});
 			}
 		},
 
@@ -174,9 +192,10 @@
 </script>
 
 <style scoped lang="scss">
-	.detaiLunBo{
+	.detaiLunBo {
 		position: relative;
 	}
+
 	.backImg {
 		position: absolute;
 		top: 30px;

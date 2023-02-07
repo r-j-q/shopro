@@ -11,6 +11,8 @@
 			// toast: Object, //全局提示，必须在页面初始化
 		},
 		mounted() {
+		 
+			 
 			//初始化赋值，如果使用的页面未初始化会报错，就算已经其他页面已经初始化过了也会看不到，所以建议用全局导航栏u-navbar
 			// getApp().globalData.toast = this.$refs.uToast
 		}
@@ -34,9 +36,15 @@
 	.colora8 {
 		color: #A8A8A8;
 	}
+	.colorf {
+		color: #fff;
+	}
 
 	.f28 {
 		font-size: 28upx;
+	}
+	.f32{
+		font-size: 32upx;
 	}
 </style>
 <!-- 组件集成 https://github.com/umicro/uView -->
