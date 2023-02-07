@@ -22,13 +22,13 @@
 				 
 			</view>
 		</view>
-		<shTypeBtn/>
+		<shTypeBtn :listTabs="listTabsShai" :currentShai="currentShai" @tabActive="tabActive"/>
 		<goodsList /> 
 		
 		<!-- 领取弹窗 -->
-		<u-popup v-model="isHandleShowMore" :borderRadius="0" mode="top" >
+		<u-popup :mask="true" v-model="isHandleShowMore" :borderRadius="0" mode="top" >
 			<view class="isHandleShowMorePadding">
-				 <shTypeBtn/>
+				 <shTypeBtn  :listTabs="listTabsShai" :currentShai="currentShai" @tabActive="tabActive"/>
 				 <view class="isMorePaddingList">
 				 	<view @click.stop="getIsMorePaddingList(flag)" class="isMorePstyle" :class="flag.id==typeId?'isMoreBackground':''" v-for="(flag,i) in listTabs" :key="i">{{flag.name}}</view>
 				 	 
@@ -66,6 +66,26 @@
 		},
 		data() {
 			return {
+				
+				listTabsShai: [{
+					name: '综合',
+					id: 0
+				}, {
+					name: '佣金',
+					id: 1
+				}, {
+					name: "上架时间",
+					id: 2
+				}, {
+					name: "积分",
+					id: 3
+				}, {
+					name: "筛选",
+					id: 4
+				}],
+				currentShai: 0,
+				
+				
 				isHandleShowMore:false,//更多类型弹窗
 				searchText: false,
 
@@ -102,6 +122,10 @@
 		onReachBottom() {},
 		onLoad() {},
 		methods: {
+			tabActive(item) {
+				console.log(item.id);
+				this.currentShai = item.id
+			},
 			change() {},
 			// 点击收缩时触发
 			bandleSearch() {

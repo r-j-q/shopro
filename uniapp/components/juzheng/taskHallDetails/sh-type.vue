@@ -4,7 +4,8 @@
 			v-for="(item,index) in listTabs" :key="index">
 			{{item.name}}
 		</view>
-		<image @click="showMore" class="centerImages" src="../../../static/images/mipmap-xhdpi/ic_pay.webp" mode=""></image>
+		<u-icon @click="showMore" width="10px"  name="list" color="#A8A8A8"></u-icon>
+		<!-- <image @click="showMore" class="centerImages" src="../../../static/images/mipmap-xhdpi/ic_pay.webp" mode=""></image> -->
 
 	</view>
 </template>

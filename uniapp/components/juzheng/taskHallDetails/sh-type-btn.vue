@@ -1,50 +1,34 @@
 <template>
 	<view class="zuiwaicheng">
-	<view class="mission-center-center">
-		<view class="center1  borderL1" @click="tabActive(item)" :class="current == index ?'bgcolor':''"
-			v-for="(item,index) in listTabs" :key="index">
-			{{item.name}}
+		<view class="mission-center-center">
+			<view class="center1  borderL1" @click="tabActives(item)" :class="currentShai == index ?'bgcolor':''"
+				v-for="(item,index) in listTabs" :key="index">
+				{{item.name}}
+				<topBottomJiantou :Index="index" :current="currentShai"/>
+			</view>
 		</view>
-	</view>
 	</view>
 </template>
 
 <script>
-	/**
-	 * 自定义之广告魔方
-	 * @property {Object} detail -广告魔方信息
-	 */
+	 
+	import topBottomJiantou from "../topBottomJiantou.vue"
 	export default {
-		components: {},
+		components: {
+			topBottomJiantou
+		},
+		props:['listTabs','currentShai'],
 		data() {
 			return {
-				listTabs: [{
-					name: '综合',
-					id: 0
-				}, {
-					name: '佣金',
-					id: 1
-				}, {
-					name: "上架时间",
-					id: 2
-				}, {
-					name: "积分",
-					id: 3
-				}, {
-					name: "筛选",
-					id: 4
-				}],
-				current: 0,
+				 
 			};
 		},
-		props: {
-			detail: {}
-		},
+		 
 		computed: {},
 		created() {},
 		methods: {
-			tabActive(item) {
-				this.current = item.id
+			tabActives(item) {
+				this.$emit('tabActive',item) 
 			},
 			// 路由跳转
 			jump(path) {
@@ -55,21 +39,22 @@
 </script>
 
 <style lang="scss" scoped>
-	.zuiwaicheng{
-			padding: 20upx 0;
-			background-color: #fff;
+	.zuiwaicheng {
+		padding: 20upx 0;
+		background-color: #fff;
 	}
+
 	.mission-center-center {
-		width: 88%;
+		width: 90%;
 		// height: 100upx;
 		margin: 0 auto;
-		 
+
 		display: flex;
 		flex-direction: row;
 		align-items: center;
 		justify-content: space-between;
-	 
-	 
+
+
 
 	}
 
@@ -84,6 +69,9 @@
 
 	.borderL1 {
 		border-radius: 50upx;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
 	}
 
 	.bgcolor {

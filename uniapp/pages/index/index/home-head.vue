@@ -12,16 +12,18 @@
 						 <ExDrawer/> 
 					</view>
 				</view>
-				<view class="u-flex u-m-r-30 fontw">
-					你好！用户 {{userInfo.nickname}}
-				</view>
-				<!-- <view
-					hover-class="hover-search"
-					class="search-box u-flex u-row-center u-col-center u-m-r-30"
-					@tap="$Router.push('/pages/public/search')"
-				>
-					<view class="u-iconfont uicon-search" :style="[navTitleColor]"></view>
-				</view> -->
+				 <view class="u-flex">
+				 	<view class="u-m-r-30 fontw">
+				 		你好！用户 {{userInfo.nickname}}
+				 	</view>
+				 	<view
+				 		hover-class="hover-search"
+				 		class="search-box u-flex u-row-center u-col-center u-m-r-30"
+				 		@tap="$Router.push('/pages/public/search')"
+				 	>
+				 		<view class="u-iconfont uicon-search" :style="[navTitleColor]"></view>
+				 	</view>
+				 </view>
 			</view>
 		</view>
 		<!-- 轮播组件 -->

@@ -31,9 +31,9 @@
 				</view>
 
 				<!-- 参与的活动 -->
-				<sh-activity v-if="goodsInfo.activity_discounts_tags && goodsInfo.activity_discounts_tags.length"
+				<!-- <sh-activity v-if="goodsInfo.activity_discounts_tags && goodsInfo.activity_discounts_tags.length"
 					:detail="goodsInfo.activity_discounts"></sh-activity>
-
+ -->
 				<!-- 规格选择 -->
 				<view class="sku-box" @tap="showSku = true"
 					v-if="activityRules.status !== 'waiting' && checkActivity(goodsInfo.activity_type, 'groupon') && goodsInfo.is_sku">
@@ -51,17 +51,17 @@
 					:serveList="goodsInfo.service"></sh-serve>
 
 				<!-- 优惠券 -->
-				<sh-coupon
+				<!-- <sh-coupon
 					v-if="goodsInfo.coupons && goodsInfo.coupons.length && goodsInfo.activity_type !== 'seckill' && goodsInfo.activity_type !== 'groupon' && detailType !== 'score'"
 					:couponList="goodsInfo.coupons"></sh-coupon>
-
+ -->
 				<!-- 拼团人-->
-				<sh-groupon
+				<!-- <sh-groupon
 					v-if="goodsInfo.activity && goodsInfo.activity.type === 'groupon' && goodsInfo.activity.rules.team_card === '1' && detailType !== 'score'"
-					:grouponData="goodsInfo"></sh-groupon>
+					:grouponData="goodsInfo"></sh-groupon> -->
 
 				<!-- 拼团玩法 -->
-				<view
+			<!-- 	<view
 					v-if="goodsInfo.activity && Number(goodsInfo.activity.richtext_id) && goodsInfo.activity_type !== 'seckill'"
 					class="groupon-play u-flex u-row-between u-p-l-20 u-p-r-20"
 					@tap="jump('/pages/public/richtext', { id: goodsInfo.activity.richtext_id })">
@@ -72,7 +72,7 @@
 						</view>
 					</view>
 					<view class="u-iconfont uicon-arrow-right" style="color:#bfbfbf ;font-size: 28rpx;"></view>
-				</view>
+				</view> -->
 
 				<!-- 选项卡 -->
 				<view class="tab-box u-flex">
@@ -205,10 +205,45 @@
 				:grouponBuyType="grouponBuyType" :goodsType="detailType === 'score' ? 'score' : 'goods'"
 				@changeType="changeType" @getSkuText="getSkuText"></shopro-sku>
 
-			<!-- 	分享组件 -->
+			<!-- 	分享组件，原来是带海报组件 -->
+			<!-- <shopro-share v-model="showShare" :posterInfo="goodsInfo" :posterType="'goods'"></shopro-share> -->
 			<shopro-share v-model="showShare" :posterInfo="goodsInfo" :posterType="'goods'"></shopro-share>
 			<!-- 登录 -->
 			<shopro-auth-modal v-if="authType"></shopro-auth-modal>
+			
+			<!-- 分享复制链接 -->
+			<u-popup :mask="true" :safeAreaInsetTop="false" closeIconPos="top-right" borderRadius="20" v-model="shareUrl" mode="bottom" >
+				<view class="share0"  >
+					 <view class="shareZhuan">
+					 	 <view class="">分享赚 </view>
+					 	 <view class="shareZhuanColse"><u-icon @click="closeShare" color="#ccc" name="close" size="20px"></u-icon> </view>
+					 </view>
+					 <view class="shareDui">
+					 	<view class="">
+					 		你想用200元宝兑换
+					 	</view>
+						<u-input
+						    placeholder="兑换金额"
+						    :border="true"
+						    clearable
+							class="customStyle"
+						  ></u-input>
+						 <view class="">
+						 	元
+						 </view>
+					 </view>
+					 <view class="shareDuiyongyou colora8">
+					 	你当前拥有1000元宝
+					 </view>
+					 <view class="share10">
+					 	 
+						<view class="shareMonly">
+							去分享赚现金
+						</view>
+						
+					 </view>
+				</view>
+			</u-popup>
 		</view>
 	</view>
 </template>
@@ -240,6 +275,8 @@
 		},
 		data() {
 			return {
+				 
+				shareUrl:false,//分享链接
 				// navbar
 				backIconName: 'arrow-left',
 
@@ -263,16 +300,16 @@
 				tabCurrent: 'tab0',
 				tabList: [{
 						id: 'tab0',
-						title: '商品详情'
+						title: '宝贝详情'
 					},
-					{
-						id: 'tab1',
-						title: '规格参数'
-					},
-					{
-						id: 'tab2',
-						title: '用户评价'
-					}
+					// {
+					// 	id: 'tab1',
+					// 	title: '规格参数'
+					// },
+					// {
+					// 	id: 'tab2',
+					// 	title: '用户评价'
+					// }
 				]
 			};
 		},
@@ -444,7 +481,12 @@
 			},
 			// 分享
 			onShare() {
-				this.showShare = true;
+				this.shareUrl = true;
+				
+			},
+			// 关闭分享
+			closeShare(){
+				this.shareUrl = false;
 			},
 			// 加入购物车
 			addCart() {
@@ -502,6 +544,33 @@
 </script>
 
 <style lang="scss">
+	.shareDui{
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		width:70%;
+		margin: 0 auto;
+		font-size: 32upx;
+	}
+	.customStyle{
+		width: 100upx;
+		margin: 0 16upx;
+	}
+	.shareDuiyongyou{
+		text-align: center;
+		margin-top: 60upx;
+	}
+	.shareMonly{
+		width: 90%;
+		background-color: #7C75F5;
+		color: #fff;
+		margin: 40upx auto;
+		padding: 30upx 0;
+		text-align: center;
+		border-radius: 100upx;
+		font-size: 28upx;
+	}
 	// 标题栏
 	.nav-box {
 		position: fixed;
@@ -578,7 +647,21 @@
 			}
 		}
 	}
-
+.shareZhuan{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	font-size: 34upx;
+	font-weight: bold;
+	padding: 30upx 0;
+}
+.shareZhuanColse{
+	position: absolute;
+	right: 10px;
+	
+}
 	// 选项卡内容
 	.tab-detail {
 		min-height: 300rpx;

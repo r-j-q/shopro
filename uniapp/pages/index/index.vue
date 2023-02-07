@@ -38,20 +38,20 @@
 					></sh-banner>
 
 					<!-- 搜索 -->
-					<sh-search v-if="item.type === 'search'"></sh-search>
+					<!-- <sh-search v-if="item.type === 'search'"></sh-search> -->
 
 					<!-- 滑动宫格 -->
-					<sh-grid-swiper
+					<!-- <sh-grid-swiper
 						v-if="item.type === 'menu'"
 						:list="item.content.list"
 						:oneRowNum="item.content.style"
-					></sh-grid-swiper>
+					></sh-grid-swiper> -->
 
 					<!-- 推荐商品 -->
-					<sh-hot-goods
+					<!-- <sh-hot-goods
 						v-if="item.type === 'goods-list' || item.type === 'goods-group'"
 						:detail="item.content"
-					></sh-hot-goods>
+					></sh-hot-goods> -->
 					<!-- 广告魔方 -->
 					<!-- {{item.type === 'adv' ?item.content:''}} -->
 					<!-- <sh-adv v-if="item.type === 'adv'" :detail="item.content"></sh-adv> -->
@@ -62,28 +62,29 @@
 					<!-- 拼团 -->
 					<!-- <sh-groupon v-if="item.type === 'groupon'" :detail="item.content"></sh-groupon> -->
 					<!-- 富文本 -->
-					<!-- <sh-richtext v-if="item.type === 'rich-text'" :richId="item.content.id"></sh-richtext> -->
+					<sh-richtext v-if="item.type === 'rich-text'" :richId="item.content.id"></sh-richtext>
 					<!-- 功能标题 -->
-					<sh-title-card
+					<!-- <sh-title-card
 						v-if="item.type === 'title-block'"
 						:title="item.content.name"
 						:bgImage="item.content.image"
 						:titleColor="item.content.color"
-					></sh-title-card>
+					></sh-title-card> -->
 					<!-- 直播 -->
 					<!-- #ifdef MP-WEIXIN -->
-					<sh-live v-if="item.type === 'live' && HAS_LIVE" :detail="item.content"></sh-live>
+					 <view class=""> </view>
+					 <!-- <sh-live v-if="item.type === 'live' && HAS_LIVE" :detail="item.content"></sh-live> -->
 					<!-- #endif -->
 				</block>
 			</view>
 
 			<!-- 分类选项卡 -->
-			<!-- <sh-category-tabs
+			<sh-category-tabs
 				v-if="categoryTabsData && categoryTabsData.category_arr && categoryTabsData.category_arr.length"
 				:enable="enable"
 				:styleType="categoryTabsData.style"
 				:tabsList="categoryTabsData.category_arr"
-			></sh-category-tabs> -->
+			></sh-category-tabs>
 			<!-- 登录提示 -->
 			<shopro-auth-modal></shopro-auth-modal>
 			<!-- 悬浮按钮 -->

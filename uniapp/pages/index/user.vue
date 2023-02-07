@@ -4,9 +4,9 @@
 		<!-- 个人信息卡片 -->
 		<userinfo-card v-if="userHeadData && userHeadData.style" :scrollTop="scrollTop" :detail="userHeadData"
 			@onShare="onShare"></userinfo-card>
-			<view class="vip_center">
-				
-			</view>
+		<view class="vip_center">
+
+		</view>
 		<!-- 自定义模块 -->
 		<!-- <view v-for="(item, index) in userTemplate" :key="item.id"> -->
 		<!-- 轮播 -->
@@ -41,22 +41,22 @@
 		<view class="order_dingdang mt50">
 			<view class="order_dingdang_left1">
 				<view class="order_dingdang_weit">
-				10000	
+					10000
 				</view>
 				<view class="order_dingdang_left_text1">
-				 冻结金额	
+					冻结金额
 				</view>
 			</view>
 			<view class="order_dingdang_right1">
 				<view class="order_dingdang_weit">
-				12000	
+					12000
 				</view>
 				<view class="order_dingdang_right_text1">
-				 元宝	
+					元宝
 				</view>
 			</view>
 		</view>
-	 
+
 		<!-- <view class="order_dingdang">
 			<view class="order_dingdang_left">
 				 
@@ -73,7 +73,7 @@
 		</view> -->
 		<sh-grid-sh :list="itemContentList2"></sh-grid-sh>
 		<view class="lineStyle">
-			
+
 		</view>
 		<sh-grid :list="itemContentList"></sh-grid>
 		<!-- copyright -->
@@ -153,29 +153,28 @@
 					{
 						name: "退换货",
 						image: require("../../static/images/mine/d4.png")
-					}  
+					}
 				],
-				itemContentList: [
-					{
+				itemContentList: [{
 						name: "课程中心",
 						image: require("../../static/images/mine/m7.png")
-					}, 
+					},
 					{
 						name: "考试中心",
 						image: require("../../static/images/mine/m5.png")
 					},
-					 {
-					 	name: "推广中心",
-					 	image: require("../../static/images/mine/m8.png")
-					 },
+					{
+						name: "推广中心",
+						image: require("../../static/images/mine/m8.png")
+					},
 					{
 						name: "订单",
 						image: require("../../static/images/mine/m2.png")
 					},
-					 {
-					 	name: "个人信息",
-					 	image: require("../../static/images/mine/m4.png")
-					 },
+					{
+						name: "个人信息",
+						image: require("../../static/images/mine/m4.png")
+					},
 					{
 						name: "学员兑换",
 						image: require("../../static/images/mine/m3.png")
@@ -184,7 +183,7 @@
 						name: "联系客服",
 						image: require("../../static/images/mine/m6.png")
 					},
-					 
+
 					{
 						name: "收藏",
 						image: require("../../static/images/mine/m9.png")
@@ -237,25 +236,29 @@
 </script>
 
 <style lang="scss" scoped>
-	.mt50{
+	.mt50 {
 		margin-top: 180rpx;
 	}
-	.lineStyle{
+
+	.lineStyle {
 		width: 674rpx;
 		height: 2rpx;
 		background: #000000;
 		opacity: 0.05;
 		margin: 50rpx auto;
 	}
-	.personal-wrap{
+
+	.personal-wrap {
 		min-height: 100%;
 		background-color: #fff;
 	}
-	.order_dingdang_weit{
+
+	.order_dingdang_weit {
 		font-size: 50upx;
 		color: #333;
 		font-weight: bold;
 	}
+
 	.order_dingdang {
 		background-color: #fff;
 		padding: 40upx;
@@ -264,35 +267,37 @@
 		align-items: center;
 		justify-content: space-between;
 	}
-.order_dingdang_left1 {
+
+	.order_dingdang_left1 {
 		width: 50%;
 		margin-right: 10upx;
 		height: 140upx;
 		border-radius: 8upx;
-		 display: flex;
+		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		 
+
 	}
 
 	.order_dingdang_right1 {
 		width: 50%;
 		height: 140upx;
 		margin-left: 10upx;
-		border-radius: 8upx; 
+		border-radius: 8upx;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		 
+
 	}
+
 	.order_dingdang_left {
 		width: 50%;
 		margin-right: 10upx;
 		height: 140upx;
-		border-radius: 8upx; 
-		background-image:url('../../static/images/mipmap-xhdpi/ic_jifenduihuan.webp') ;
+		border-radius: 8upx;
+		background-image: url('../../static/images/mipmap-xhdpi/ic_jifenduihuan.webp');
 		background-size: cover;
 		background-repeat: no-repeat;
 	}
@@ -301,23 +306,32 @@
 		width: 50%;
 		height: 140upx;
 		margin-left: 10upx;
-		border-radius: 8upx; 
-		background-image:url('../../static/images/mipmap-xhdpi/ic_renwudating.webp') ;
+		border-radius: 8upx;
+		background-image: url('../../static/images/mipmap-xhdpi/ic_renwudating.webp');
 		background-size: cover;
 		background-repeat: no-repeat;
 	}
-	.order_dingdang_left_text1{ font-size: 28upx;}
-	.order_dingdang_right_text1{ font-size: 28upx;}
-     .order_dingdang_left_text{
-		 font-weight: bold;
-		 font-size: 36upx;
-		 margin: 50upx 20upx;
-	 }
-	 .order_dingdang_right_text{
-		 font-weight: bold;
-		 font-size: 36upx;
-		 margin: 50upx 20upx;
-	 }
+
+	.order_dingdang_left_text1 {
+		font-size: 28upx;
+	}
+
+	.order_dingdang_right_text1 {
+		font-size: 28upx;
+	}
+
+	.order_dingdang_left_text {
+		font-weight: bold;
+		font-size: 36upx;
+		margin: 50upx 20upx;
+	}
+
+	.order_dingdang_right_text {
+		font-weight: bold;
+		font-size: 36upx;
+		margin: 50upx 20upx;
+	}
+
 	.copyright-box {
 		.copyright-text {
 			font-size: 22rpx;
@@ -325,7 +339,10 @@
 			color: #c4c4c4;
 		}
 	}
-	  .u-flex {
-		width: 100%!important;
+
+	.u-flex {
+		width: 92% !important;
+		background: #FAFCFD;
+		margin: 0 auto;
 	}
 </style>

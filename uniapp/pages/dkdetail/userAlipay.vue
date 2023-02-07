@@ -10,6 +10,7 @@
 
 		</u-form>
 		<view @click="submit" class="submitAlipay">提交</view>
+		<u-toast ref="uToast"></u-toast>
 	</view>
 </template>
 
@@ -47,23 +48,29 @@
 
 		methods: {
 			submit() {
-				if(!this.form.name){
-					uni.showToast({
-						icon:'none',
-						title:"请输入真实姓名"
+				if (!this.form.name) {
+					this.$refs.uToast.show({
+						title: "请输入真实姓名",
+						position: 'bottom'
+
+					})
+
+					return;
+				}
+				if (!this.form.alipyNum) {
+                    this.$refs.uToast.show({
+						title: "请输入账号",
+						position: 'bottom'
+
 					})
 					return;
 				}
-				if(!this.form.alipyNum){
-					uni.showToast({
-						icon:'none',
-						title:"请输入账号"
-					})
-					return;
-				}
-				 
+
+
+
+
 				uni.navigateTo({
-					url:`/pages/dkdetail/toAlipay?name=${encodeURIComponent(JSON.stringify(this.form.name))}&alipyNum=${encodeURIComponent(JSON.stringify(this.form.alipyNum))}`,
+					url: `/pages/dkdetail/toAlipay?name=${encodeURIComponent(JSON.stringify(this.form.name))}&alipyNum=${encodeURIComponent(JSON.stringify(this.form.alipyNum))}`
 				})
 			}
 		}
@@ -76,8 +83,9 @@
 		background-color: #fff;
 		padding: 50upx 20upx;
 	}
-	.submitAlipay{
-		 
+
+	.submitAlipay {
+
 		width: 70%;
 		margin: 0 auto;
 		padding: 28upx 0;

@@ -204,8 +204,9 @@ export default {
 // 正常商品
 .normal-price-box {
 	padding: 20rpx;
-	background: url($IMG_URL+'/imgs/detail/detail_price_normal_bg.png') no-repeat;
-	background-size: 100% 100%;
+	// background: url($IMG_URL+'/imgs/detail/detail_price_normal_bg.png') no-repeat;
+	// background-size: 100% 100%;
+	background-color:#7C75F5;
 	.unit,
 	.notice {
 		font-size: 24rpx;

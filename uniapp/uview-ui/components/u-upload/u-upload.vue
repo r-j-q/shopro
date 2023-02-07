@@ -21,7 +21,7 @@
 				<u-icon class="u-icon" :name="delIcon" size="20" :color="delColor"></u-icon>
 			</view>
 			<u-line-progress
-				v-if="showProgress && item.progress > 0 && !item.error"
+				v-if="showProgress && item.progress > 0 && item.progress != 100 && !item.error"
 				:show-percent="false"
 				height="16"
 				class="u-progress"
@@ -90,7 +90,6 @@
  * @event {Function} on-choose-complete 每次选择图片后触发，只是让外部可以得知每次选择后，内部的文件列表
  * @example <u-upload :action="action" :file-list="fileList" ></u-upload>
  */
-import Auth from '@/shopro/permission/index.js';
 export default {
 	name: 'u-upload',
 	props: {
@@ -244,7 +243,7 @@ export default {
 			default: null
 		},
 		// 允许上传的图片后缀
-		limitType: {
+		limitType:{
 			type: Array,
 			default() {
 				// 支付宝小程序真机选择图片的后缀为"image"
@@ -276,7 +275,7 @@ export default {
 					// 数组的some方法意思是，只要数组元素有任意一个元素条件符合，就返回true，而另一个数组的every方法的意思是数组所有元素都符合条件才返回true
 					let tmp = this.lists.some(val => {
 						return val.url == value.url;
-					});
+					})
 					// 如果内部没有这个图片(tmp为false)，则添加到内部
 					!tmp && this.lists.push({ url: value.url, error: false, progress: 100 });
 				});
@@ -297,17 +296,11 @@ export default {
 			this.uploadFile();
 		},
 		// 选择图片
-		async selectFile() {
+		selectFile() {
 			if (this.disabled) return;
-			let authState = 0;
-			authState += await new Auth('writePhotosAlbum').check();
-			if (authState < 1) return;
-			authState += await new Auth('camera').check();
-			if (authState < 2) return;
 			const { name = '', maxCount, multiple, maxSize, sizeType, lists, camera, compressed, maxDuration, sourceType } = this;
 			let chooseFile = null;
 			const newMaxCount = maxCount - lists.length;
-
 			// 设置为只选择图片的时候使用 chooseImage 来实现
 			chooseFile = new Promise((resolve, reject) => {
 				uni.chooseImage({
@@ -324,8 +317,8 @@ export default {
 					let listOldLength = this.lists.length;
 					res.tempFiles.map((val, index) => {
 						// 检查文件后缀是否允许，如果不在this.limitType内，就会返回false
-						if (!this.checkFileExt(val)) return;
-
+						if(!this.checkFileExt(val)) return ;
+						
 						// 如果是非多选，index大于等于1或者超出最大限制数量时，不处理
 						if (!multiple && index >= 1) return;
 						if (val.size > maxSize) {
@@ -391,7 +384,7 @@ export default {
 				return;
 			}
 			// 执行before-upload钩子
-			if (this.beforeUpload && typeof this.beforeUpload === 'function') {
+			if(this.beforeUpload && typeof(this.beforeUpload) === 'function') {
 				// 执行回调，同时传入索引和文件列表当作参数
 				// 在微信，支付宝等环境(H5正常)，会导致父组件定义的customBack()函数体中的this变成子组件的this
 				// 通过bind()方法，绑定父组件的this，让this.customBack()的this为父组件的上下文
@@ -401,15 +394,13 @@ export default {
 				let beforeResponse = this.beforeUpload.bind(this.$u.$parent.call(this))(index, this.lists);
 				// 判断是否返回了promise
 				if (!!beforeResponse && typeof beforeResponse.then === 'function') {
-					await beforeResponse
-						.then(res => {
-							// promise返回成功，不进行动作，继续上传
-						})
-						.catch(err => {
-							// 进入catch回调的话，继续下一张
-							return this.uploadFile(index + 1);
-						});
-				} else if (beforeResponse === false) {
+					await beforeResponse.then(res => {
+						// promise返回成功，不进行动作，继续上传
+					}).catch(err => {
+						// 进入catch回调的话，继续下一张
+						return this.uploadFile(index + 1);
+					})
+				} else if(beforeResponse === false) {
 					// 如果返回false，继续下一张图片的上传
 					return this.uploadFile(index + 1);
 				} else {
@@ -430,6 +421,9 @@ export default {
 				name: this.name,
 				formData: this.formData,
 				header: this.header,
+				// #ifdef MP-ALIPAY
+				fileType:'image',
+				// #endif
 				success: res => {
 					// 判断是否json字符串，将其转为json格式
 					let data = this.toJson && this.$u.test.jsonString(res.data) ? JSON.parse(res.data) : res.data;
@@ -473,25 +467,23 @@ export default {
 			uni.showModal({
 				title: '提示',
 				content: '您确定要删除此项吗？',
-				success: async res => {
+				success: async (res) => {
 					if (res.confirm) {
 						// 先检查是否有定义before-remove移除前钩子
 						// 执行before-remove钩子
-						if (this.beforeRemove && typeof this.beforeRemove === 'function') {
+						if(this.beforeRemove && typeof(this.beforeRemove) === 'function') {
 							// 此处钩子执行 原理同before-remove参数，见上方注释
 							let beforeResponse = this.beforeRemove.bind(this.$u.$parent.call(this))(index, this.lists);
 							// 判断是否返回了promise
 							if (!!beforeResponse && typeof beforeResponse.then === 'function') {
-								await beforeResponse
-									.then(res => {
-										// promise返回成功，不进行动作，继续上传
-										this.handlerDeleteItem(index);
-									})
-									.catch(err => {
-										// 如果进入promise的reject，终止删除操作
-										this.showToast('已终止移除');
-									});
-							} else if (beforeResponse === false) {
+								await beforeResponse.then(res => {
+									// promise返回成功，不进行动作，继续上传
+									this.handlerDeleteItem(index);
+								}).catch(err => {
+									// 如果进入promise的reject，终止删除操作
+									this.showToast('已终止移除');
+								})
+							} else if(beforeResponse === false) {
 								// 返回false，终止删除
 								this.showToast('已终止移除');
 							} else {
@@ -509,7 +501,7 @@ export default {
 		// 执行移除图片的动作，上方代码只是判断是否可以移除
 		handlerDeleteItem(index) {
 			// 如果文件正在上传中，终止上传任务，进度在0 < progress < 100则意味着正在上传
-			if (this.lists[index].process < 100 && this.lists[index].process > 0) {
+			if (this.lists[index].progress < 100 && this.lists[index].progress > 0) {
 				typeof this.lists[index].uploadTask != 'undefined' && this.lists[index].uploadTask.abort();
 			}
 			this.lists.splice(index, 1);
@@ -552,18 +544,18 @@ export default {
 			const reg = /.+\./;
 			// 如果是H5，需要从name中判断
 			// #ifdef H5
-			fileExt = file.name.replace(reg, '').toLowerCase();
+			fileExt = file.name.replace(reg, "").toLowerCase();
 			// #endif
 			// 非H5，需要从path中读取后缀
 			// #ifndef H5
-			fileExt = file.path.replace(reg, '').toLowerCase();
+			fileExt = file.path.replace(reg, "").toLowerCase();
 			// #endif
 			// 使用数组的some方法，只要符合limitType中的一个，就返回true
 			noArrowExt = this.limitType.some(ext => {
 				// 转为小写
 				return ext.toLowerCase() === fileExt;
-			});
-			if (!noArrowExt) this.showToast(`不允许选择${fileExt}格式的文件`);
+			})
+			if(!noArrowExt) this.showToast(`不允许选择${fileExt}格式的文件`);
 			return noArrowExt;
 		}
 	}
