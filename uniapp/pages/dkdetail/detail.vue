@@ -120,7 +120,7 @@
 		</view>
 
 		<view class="footerShare">
-			<view class="footerShare0">
+			<view class="footerShare0" @click="test">
 				<u-icon name="share-fill" size="40rpx"></u-icon>
 				<view class="">
 					分享
@@ -139,19 +139,26 @@
 			</view>
 		</view>
 
-
+		<qrcode-poster ref="poster" :title="title" :subTitle="subTitle" :headerImg="headerImg" :content="content">
+		</qrcode-poster>
 		<u-toast ref="uToastDetail"></u-toast>
 	</view>
 </template>
 
 <script>
+	import QrcodePoster from '@/components/poster/poster.vue'
 	export default {
 
 		components: {
-
+			QrcodePoster
 		},
 		data() {
 			return {
+				headerImg: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
+				title: '测试标题',
+				subTitle: '测试标题',
+				content: "",
+
 				list: [{
 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
 						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
@@ -169,7 +176,9 @@
 		},
 
 		methods: {
-
+			test() {
+				this.$refs.poster.showCanvas(this.headerImg,  'https://cdn.uviewui.com/uview/swiper/2.jpg')
+			},
 			nativeGetTo() {
 				uni.navigateBack()
 			},

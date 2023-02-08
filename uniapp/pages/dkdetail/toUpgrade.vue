@@ -8,8 +8,12 @@
 				<text>¥</text>
 				<text class="s_upgrade_text_num">999.00</text>
 			</view>
-		</view>
-		<view class="s_upgrade_94 s_upgrade_img"> </view>
+		</view> 
+			<view class="s_upgrade_94 s_upgrade_img">
+			<image :src="vipsType" mode=""></image>	
+			</view>
+		 
+		 
 		<view class="s_upgrade_94 s_sw s_agree_xieyi">
 			<view class="">
 				是否同意 <text class="s_upgrade_xy"> &laquo;服务协议 &raquo;</text>
@@ -53,7 +57,9 @@
 			return {
 				checked: false,
 				value: 'orange',
-				zhifubao:require('../../static/images/mipmap-xhdpi/ic_alipay.webp')
+				zhifubao:require('../../static/images/mipmap-xhdpi/ic_alipay.webp'),
+				vipsType:require('../../static/images/vip/vipsType.png'),
+				 
 			};
 		},
 		// 触底加载更多
@@ -83,6 +89,11 @@
 		min-height: 100%;
 		background-color: #fff;
 	}
+	.bgfff{
+		width: 100%;
+		background-color: #fff;
+		
+	}
 
 	.s_upgrade_monly {
 		display: flex;
@@ -94,6 +105,7 @@
 		margin: 0 auto;
 		padding: 20upx;
 		border-radius: 20upx;
+		    margin-bottom: 40upx;
 
 	}
 
@@ -129,7 +141,12 @@
 	}
 
 	.s_upgrade_img {
-		height: 300upx;
+		height: 400upx;
+		width: 100%;
+	}
+	.s_upgrade_img image{
+		width: 100%;
+		height: 100%;
 	}
 
 	.backgroundTopBottom {

@@ -284,6 +284,7 @@
 	// 弹窗里面筛选内容
 	.isHandleShowMorePadding{
 		padding: 40upx;
+		padding-top: 80upx;
 	}
 	.isMorePaddingList{
 		display: flex;

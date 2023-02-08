@@ -33,6 +33,12 @@ export default {
 		message: '请输入验证码',
 		trigger: ['change', 'blur']
 	}],
+	Ycode: [{
+		required: true,
+		min: 4,
+		message: '请输入邀请码',
+		trigger: ['change', 'blur']
+	}],
 
 	// 密码
 	password: [{

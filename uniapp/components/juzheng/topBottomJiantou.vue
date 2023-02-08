@@ -1,9 +1,9 @@
 <template>
 	<view class="fill-top-bottom">
 		<u-icon v-if="Index>0 && Index<4" class="play-left-fill-top" name="play-left-fill"
-			:color="current == Index ? '#7C75F5':'#333'"></u-icon>
+			:color="current == Index ? '#7C75F5':'#999'"></u-icon>
 		<u-icon v-if="Index>0 && Index<4" class="play-left-fill-bottom" name="play-right-fill"
-			:color="current == Index? '#7C75F5':'#333’'"></u-icon>
+			:color="current == Index? '#7C75F5':'#999’'"></u-icon>
 
 	</view>
 </template>

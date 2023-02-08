@@ -115,6 +115,16 @@
 					</view>
 					<view class="message-error">{{ form['register'].error.code || '' }}</view>
 				</view>
+				<view class="form-item u-border-bottom">
+					<view class="item-content u-flex u-col-center">
+						<view class="item-title">邀请码</view>
+						<u-input class="u-m-r-10 u-flex-1" @blur="checkValue($event, 'Ycode')"
+							@input="checkValue($event, 'Ycode')" placeholder="请输入邀请码"
+							:placeholderStyle="placeholderStyle" v-model="form['register'].data.Ycode" type="number">
+						</u-input>
+					</view>
+					<view class="message-error">{{ form['register'].error.Ycode || '' }}</view>
+				</view>
 				<button v-if="!isLogin" class="u-reset-button type-btn"
 					@tap="showAuthModal('accountLogin')">返回登录</button>
 			</view>
@@ -329,17 +339,17 @@
 					// 2.短信登录
 					smsLogin: {
 						data: {
-							mobile: '', // 手机号
+							mobile: '', // 手机号 
 							code: '', // 验证码
 							isMobileEnd: false // 手机号输入完毕
 						},
 						rules: {
 							code: FormValidate.code,
-							mobile: FormValidate.mobile
+							mobile: FormValidate.mobile, 
 						},
 						error: {
 							mobile: '', // 手机号
-							code: '' // 验证码
+							code: '' // 验证码 
 						}
 					},
 					// 3.注册
@@ -347,17 +357,20 @@
 						data: {
 							mobile: '', // 手机号
 							code: '', // 验证码
+							Ycode: '', // 邀请码
 							password: '', // 密码
 							isMobileEnd: false // 手机号输入完毕
 						},
 						rules: {
 							code: FormValidate.code,
+							Ycode: FormValidate.Ycode,
 							mobile: FormValidate.mobile,
 							password: FormValidate.password
 						},
 						error: {
 							mobile: '', // 手机号
 							code: '', // 验证码
+							Ycode: '', // 邀请码
 							password: '' // 密码
 						}
 					},
