@@ -2,28 +2,29 @@
 	<!-- 订单卡片 -->
 	<view class="sh-order-box u-flex u-m-b-10 u-p-r-20">
 		<view class="order-box u-flex">
-			<view class="order-item u-flex-col " @tap="jump('/pages/order/list', { type: order.type })" v-for="order in orderNav" :key="order.id">
-				<view class="u-flex-col item-box u-col-center">
-					<image class="order-img" :src="$IMG_URL + order.img" mode=""></image>
+			<view class="order-item u-flex-col "  @tap="jump('/pages/order/list', { type: order.type })" v-for="(order,index) in orderNav" :key="order.id">
+				<view class="u-flex-col item-box u-col-center" v-if="index!=3">
+					<image class="order-img" :src="order.img" mode=""></image>
 					<text class="item-title">{{ order.title }}</text>
 					<view class="badge" v-if="orderNum && orderNum[order.type]">{{ orderNum[order.type] }}</view>
 				</view>
-			</view>
-			<view class="order-item u-flex-col " @tap="jump('/pages/order/after-sale/list')">
-				<view class="u-flex-col item-box u-col-center">
-					<image class="order-img" :src="$IMG_URL + '/imgs/user/tab55.png'" mode=""></image>
-					<text class="item-title">退换货</text>
+				<view class="order-item u-flex-col" v-if="index==3" @tap="jump('/pages/order/after-sale/list')">
+					<view class="u-flex-col item-box u-col-center">
+						<image class="order-img" :src="orderNav[3].img" mode=""></image>
+						<text class="item-title">退换货</text>
+					</view>
 				</view>
 			</view>
+			 
 		</view>
 
-		<view class="order-item u-flex-col all-order " @tap="jump('/pages/order/list', { type: 'all' })">
+		<!-- <view class="order-item u-flex-col all-order " @tap="jump('/pages/order/list', { type: 'all' })">
 			<image class="cut-off--line" :src="$IMG_URL + '/imgs/user/cut_off_line.png'" mode=""></image>
 			<view class="u-flex-col item-box u-col-center">
 				<image class="order-img" :src="$IMG_URL + '/imgs/user/all_order.png'" mode="aspectFill"></image>
 				<text class="item-title">全部订单</text>
 			</view>
-		</view>
+		</view> -->
 	</view>
 </template>
 
@@ -37,37 +38,53 @@ export default {
 	components: {},
 	data() {
 		return {
+			
+			// name: "待付款",
+			// 	image: require("../../static/images/mine/d1.png")
+			// },
+			// {
+			// 	name: "待发货",
+			// 	image: require("../../static/images/mine/d2.png")
+			// },
+			// {
+			// 	name: "待收货",
+			// 	image: require("../../static/images/mine/d3.png")
+			// },
+			// {
+			// 	name: "退换货",
+			// 	image: require("../../static/images/mine/d4.png")
+			// }
 			orderNav: [
 				{
 					id: 1,
 					title: '待付款',
-					img: '/imgs/user/tab11.png',
+					img: require("../../../static/images/mine/d1.png"),
 					type: 'nopay'
 				},
-				// {
-				// 	id: 2,
-				// 	title: '待发货',
-				// 	img: this.$IMG_URL + '/imgs/user/tab22.png',
-				// 	type: 'nosend'
-				// },
+				{
+					id: 2,
+					title: '待发货',
+					img: require("../../../static/images/mine/d2.png"),
+					type: 'nosend'
+				},
 				{
 					id: 3,
 					title: '待收货',
-					img: '/imgs/user/tab33.png',
+					img: require("../../../static/images/mine/d3.png"),
 					type: 'noget'
 				},
-				{
-					id: 4,
-					title: '待评价',
-					img: '/imgs/user/tab44.png',
-					type: 'nocomment'
-				}
 				// {
-				// 	id: 5,
-				// 	title: '退换货',
-				// 	img: this.$IMG_URL + '/imgs/user/tab55.png',
-				// 	type: 'aftersale'
+				// 	id: 4,
+				// 	title: '待评价',
+				// 	img: '/imgs/user/tab44.png',
+				// 	type: 'nocomment'
 				// }
+				{
+					id: 5,
+					title: '退换货',
+					img: require("../../../static/images/mine/d4.png"),
+					type: 'aftersale'
+				}
 			]
 		};
 	},

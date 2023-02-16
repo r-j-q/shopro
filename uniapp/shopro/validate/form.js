@@ -46,11 +46,12 @@ export default {
 			message: '请输入密码',
 			trigger: ['change', 'blur']
 		},
-		{
-			pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]+\S{5,12}$/,
-			message: '需同时含有字母和数字，长度在6-12之间',
-			trigger: ['change', 'blur']
-		}
+		// {
+		// 	// pattern: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]+\S{5,12}$/,
+		// 	// pattern: ,
+		// 	message: '需同时含有字母和数字，长度在6-12之间',
+		// 	trigger: ['change', 'blur']
+		// }
 	],
 
 	// 真实姓名

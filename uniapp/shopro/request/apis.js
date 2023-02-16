@@ -64,7 +64,7 @@ export default {
 			auth: false,
 			method: "GET",
 			// desc: '富文本数据',
-		}, 
+		},
 		shareAdd: {
 			url: "share/add",
 			auth: false,
@@ -658,7 +658,7 @@ export default {
 			// desc: '充值'
 		},
 		rechargeLog: {
-			url: "trade_order/index", 
+			url: "trade_order/index",
 			auth: true,
 			method: "GET",
 			// desc: '充值记录'
@@ -773,6 +773,51 @@ export default {
 			method: "GET",
 			// desc: '佣金记录',
 		}
+	},
+//分享赚  
+	detailPointsShare: {
+		pointsShare: {
+			url: "points/share",
+			auth: true,
+			method: "POST",
+		}
+
+	},
+	vips: {
+		taskCategory: {
+			url: "task/category",
+			auth: true,
+			method: "POST",
+			// desc: '申请成为分销商',
+		},
+		taskPointsList: {
+			url: "task/pointsList",
+			auth: true,
+			method: "POST",
+			// desc: '申请成为分销商',
+		},
+
+	},
+	missionHall: {
+		task: {
+			url: "task",
+			auth: true,
+			method: "POST",
+			// desc: '申请成为分销商',
+		},
+		taskOrder: {
+			url: "task/order",
+			auth: true,
+			method: "POST",
+			// desc: '申请成为分销商',
+		},
+		taskDetail: {
+			url: "task/detail",
+			auth: true,
+			method: "POST",
+			// desc: '申请成为分销商',
+		},
+
 	}
 
 

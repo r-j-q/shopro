@@ -12,7 +12,7 @@ const state = {
 	agentInfo: {}, //分销商信息
 	userData: {}, //用户其他相关信息
 	subscribeMessageIdsMap: [], //小程序订阅消息模板ids
-	authType: '' // smsLogin:手机号登录注册, accountLogin:密码登录, forgotPwd:忘记密码, changePwd:修改密码, bindMobile:绑定手机号
+	authType: 'accountLogin' // smsLogin:手机号登录注册, accountLogin:密码登录, forgotPwd:忘记密码, changePwd:修改密码, bindMobile:绑定手机号
 }
 
 const getters = {

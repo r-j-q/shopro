@@ -1,47 +1,62 @@
 <template>
-	<view class="goodsList" @click="nagatorToDetail">
-		<view class="goodsListTop">
-			<view class="goodsListTopImg">
-				<image src="http://file.shopro.top/uploads/20210519/356bead1ea234354168954aa55e98d7a.jpeg" alt=""
-					srcset="">
+	<view class="p_100">
+
+
+		<view class="goodsList" @click="nagatorToDetail(item.id)" v-for="(item,index) in missionList" :key="index">
+			<view class="goodsListTop">
+				<view class="goodsListTopImg">
+					<image :src="ploutoUrl+item.image" alt=""
+						srcset="">
+				</view>
+				<view class="goodsListTopText">
+					<view class="goodsListTopTitle ellipsis2">{{item.goods_name}} </view>
+					<view class="goodsListTag m20 ">
+						短视频任务
+					</view>
+					<view class="goodsListMonly m20">
+						最高奖励{{item.reward}}元
+					</view>
+					<view class="goodsListjy m20">
+						<view class="as1">价格：¥{{item.price}} </view>
+						<view class="as2">佣金：¥{{item.commission}} </view>
+					</view>
+					<view class="m20">
+						<LineProgress :currentIndex="11" :progressCount="item.robbed" :total="100" />
+					</view>
+				</view>
 			</view>
-			<view class="goodsListTopText">
-				<view class="goodsListTopTitle ellipsis2">杨先生黑芝麻芡实糕八珍杨先生黑芝麻芡实糕八珍杨先生黑芝麻芡实糕八珍 </view>
-				<view class="goodsListTag m20 ">
-					短视频任务
+			<view class="goodsListbottom">
+				<view class="goodsListbottomLeft">
+					<view class="">
+						<h4>奖励规则</h4>
+					</view>
+					<view class="colorC m20" v-for="(items,i) in item.award" :key="i">
+						<h6>{{items}}</h6>
+					</view>
 				</view>
-				<view class="goodsListMonly m20">
-					最高奖励5元
+				<view class="goodsListbottomRight">
+					<view class="goodsListbottomRightLeft">
+						<view class="">
+							<h4>参与要求</h4>
+						</view>
+						<view class="colorC m20">
+							<h6>粉丝数≥{{item.fans_required}} </h6>
+						</view>
+						<view class="colorC m20">
+							<h6>橱销≥{{item.showcase_required}} </h6>
+						</view>
+						<view class="colorC m20">
+							<h6>积分≥{{item.points_required}}</h6>
+						</view>
+					</view>
+					<view class="goodsListbottomRightRight" @click.stop="getGoods(item.id)">
+						<view class="buttomOver">
+							{{item.order_state_txt}}
+						</view>
+					</view>
 				</view>
-				<view class="goodsListjy m20">
-					<view class="as1">价格：¥19.90 </view>
-					<view class="as2">佣金：¥19.90 </view>
-				</view>
-				<view class="m20">
-					<LineProgress  :currentIndex="11" :total="100"/>
-				</view>
+
 			</view>
-		</view>
-		<view class="goodsListbottom">
-              <view class="goodsListbottomLeft">
-              	 <view class=""><h4>奖励规则</h4> </view>
-              	 <view class="colorC m20"><h6>粉丝数3000～10000 奖励2元</h6> </view>
-              	 <view class="colorC m20"><h6>粉丝数10001～50000 奖励5元</h6> </view>
-              </view>
-			  <view class="goodsListbottomRight">
-			  <view class="goodsListbottomRightLeft">
-			  	<view class=""><h4>参与要求</h4> </view>
-			  	 <view class="colorC m20"><h6>粉丝数≥3000 </h6> </view>
-			  	<view class="colorC m20"><h6>橱销≥0</h6> </view>
-			  	<view class="colorC m20"><h6>积分≥500.0</h6> </view>
-			  </view>
-			  <view class="goodsListbottomRightRight" @click.stop="getGoods">
-			  	 <view class="buttomOver">
-			  	 	已领完
-			  	 </view>
-			  </view>
-			  </view>
-			 
 		</view>
 	</view>
 </template>
@@ -49,7 +64,10 @@
 <script>
 	import LineProgress from "./lineProgress.vue"
 	export default {
-				components: {LineProgress},
+		components: {
+			LineProgress
+		},
+		props: ['ploutoUrl','missionList'],
 		data() {
 			return {
 
@@ -59,14 +77,15 @@
 
 
 		methods: {
-			getGoods(){
-				this.$emit("getCodeGoods")
+			getGoods(id) {
+				this.$emit("getTaskOrder",id)
 			},
-             nagatorToDetail(){
-				uni.navigateTo({
-					url:"/pages/dkdetail/detail"
+			nagatorToDetail(id) {
+				uni.navigateTo({ 
+					url:`/pages/dkdetail/detail?id=${id}`
+				 
 				})
-			 }
+			}
 
 		}
 	};
@@ -74,11 +93,11 @@
 
 <style scoped>
 	.goodsList {
-	 
+
 		overflow: hidden;
-	      margin-bottom: 30upx;
+		margin-bottom: 30upx;
 	}
-	 
+
 
 	.goodsListjy {
 		display: flex;
@@ -139,10 +158,10 @@
 	.goodsListTag {
 		color: #7C75F5;
 		font-size: 12px;
-	 width: 160upx;
-	 height: 50upx;
-	 line-height: 50upx;
-	 text-align: center;
+		width: 160upx;
+		height: 50upx;
+		line-height: 50upx;
+		text-align: center;
 		background-color: #F3E5F6;
 		border-radius: 8upx;
 	}
@@ -152,46 +171,54 @@
 		font-size: 40upx;
 		font-weight: bold;
 	}
-	.m20{
+
+	.m20 {
 		margin-top: 20upx;
-		 
+
 	}
-	.goodsListbottom{
+
+	.goodsListbottom {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
 		justify-content: space-between;
 		background-color: #fff;
 	}
-	.goodsListbottomLeft{
+
+	.goodsListbottomLeft {
 		flex: 1;
 		height: 300upx;
 		padding: 60upx;
 	}
-	.colorC{
+
+	.colorC {
 		color: #999;
 	}
-	.goodsListbottomRight{
+
+	.goodsListbottomRight {
 		flex: 1;
-		height: 300upx; 
+		height: 300upx;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
 		justify-content: space-between;
 	}
-	.goodsListbottomRightLeft{
+
+	.goodsListbottomRightLeft {
 		flex: 1;
 	}
-	.goodsListbottomRightRight{
+
+	.goodsListbottomRightRight {
 		flex: 1;
 	}
-	.buttomOver{
+
+	.buttomOver {
 		width: 120upx;
 		height: 120upx;
 		line-height: 120upx;
 		text-align: center;
 		border-radius: 60upx;
 		color: #fff;
-		background-color:#ff9900 ;
+		background-color: #ff9900;
 	}
 </style>

@@ -10,7 +10,7 @@
 					<view class="u-felx u-col-bottom">
 						<text class="unit font-OPPOSANS">￥</text>
 						<text class="price font-OPPOSANS">{{ detail.price }}</text>
-						<text class="notice">+1000元宝</text>
+						<text class="notice">+{{detail.points}}元宝</text>
 					</view>
 					<view class="u-flex u-row-left price-bottom-box">
 						<view class="u-flex">

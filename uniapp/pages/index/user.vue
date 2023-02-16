@@ -71,9 +71,10 @@
 				</view>
 			</view>
 		</view> -->
-		<sh-grid-sh :list="itemContentList2"></sh-grid-sh>
+		<sh-order-card ></sh-order-card>
+		<!-- <sh-grid-sh :list="itemContentList2"></sh-grid-sh> -->
 		<view class="lineStyle">
-
+ 
 		</view>
 		<sh-grid :list="itemContentList"></sh-grid>
 		<!-- copyright -->
@@ -103,7 +104,7 @@
 	import shCell from './components/sh-cell.vue';
 	import shGrid from './components/sh-grid.vue';
 	import shGridSh from './components/sh-grid-sh.vue';
-	// import shOrderCard from './componentsA/sh-order-card.vue';
+	import shOrderCard from './components/sh-order-card.vue';
 	import shWallet from './components/sh-wallet.vue';
 	import shHotGoods from './components/sh-hot-goods.vue';
 
@@ -128,10 +129,9 @@
 			shGrid,
 			shGridSh,
 			shWallet,
-			// shOrderCard,
+			shOrderCard,
 			shHotGoods,
-
-			userinfoCard
+            userinfoCard
 		},
 		data() {
 			return {

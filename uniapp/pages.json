@@ -4,7 +4,9 @@
 		"^shopro-(.*)": "@/components/shopro-$1/shopro-$1.vue"
 	},
 
-	"pages": [{
+	"pages": [
+		 
+		{
 			"path": "pages/index/index",
 			"aliasPath": "/", //对于h5端你必须在首页加上aliasPath并设置为/
 			"style": {
@@ -23,6 +25,20 @@
 				"async": true, //是否同步
 				"title": "积分商城", //标题
 				"group": "商城" //分组
+			}
+		},
+		// 任务大厅
+		{
+			"path": "pages/user/login",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"navigationStyle": "custom"
+			},
+			"meta": {
+				"auth": false,
+				"async": true,
+				"title": "登录",
+				"group": "商城"
 			}
 		},
 		// 分类页面
@@ -53,6 +69,7 @@
 				"group": "商城"
 			}
 		},
+		 
 		{
 			"path": "pages/index/cart",
 			"style": {

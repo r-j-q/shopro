@@ -54,7 +54,7 @@
 					></sh-hot-goods> -->
 					<!-- 广告魔方 -->
 					<!-- {{item.type === 'adv' ?item.content:''}} -->
-					<!-- <sh-adv v-if="item.type === 'adv'" :detail="item.content"></sh-adv> -->
+					<sh-adv v-if="item.type === 'adv'" :detail="item.content"></sh-adv>
 					<!-- 优惠券 -->
 					<!-- <sh-coupon v-if="item.type === 'coupons'" :detail="item.content"></sh-coupon> -->
 					<!-- 秒杀-->
@@ -162,7 +162,7 @@ export default {
 		};
 	},
 	computed: {
-		...mapGetters(['initShop', 'homeTemplate', 'hasTemplate', 'isLogin']),
+		...mapGetters(['initShop', 'homeTemplate', 'hasTemplate', 'isLogin','userInfo']),
 		// 头部模块数据
 		headSwiperList() {
 			if (this.homeTemplate?.length) {
@@ -184,6 +184,13 @@ export default {
 	},
 	onShow() {
 		let that = this;
+		console.log("isLogin",this.userInfo.username);
+		if(!this.userInfo.username){
+			uni.navigateTo({
+				url:"/pages/user/login"
+			})
+			return
+		}
 		this.enable = true;
 		this.isLogin && this.getCartList();
 		// 网络变化检测
@@ -221,4 +228,8 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+	/deep/ .tab-item{
+		  padding: 10px!important;
+	 }
+</style>

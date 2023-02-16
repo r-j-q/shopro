@@ -220,12 +220,13 @@
 					 </view>
 					 <view class="shareDui">
 					 	<view class="">
-					 		你想用200元宝兑换
+					 		你想用{{goodsInfo.points}}元宝兑换
 					 	</view>
 						<u-input
 						    placeholder="兑换金额"
 						    :border="true"
 						    clearable
+							v-model="amount"
 							class="customStyle"
 						  ></u-input>
 						 <view class="">
@@ -233,11 +234,10 @@
 						 </view>
 					 </view>
 					 <view class="shareDuiyongyou colora8">
-					 	你当前拥有1000元宝
+					 	你当前拥有{{goodsInfo.points}}元宝
 					 </view>
 					 <view class="share10">
-					 	 
-						<view class="shareMonly">
+					 	 <view class="shareMonly" @click="detailPointsSharePointsShare">
 							去分享赚现金
 						</view>
 						
@@ -275,7 +275,7 @@
 		},
 		data() {
 			return {
-				 
+				 amount:0,//分享金币数
 				shareUrl:false,//分享链接
 				// navbar
 				backIconName: 'arrow-left',
@@ -345,6 +345,36 @@
 		},
 
 		methods: {
+			// 分享赚
+			detailPointsSharePointsShare(){ 
+				let that=this;
+			 
+				that.$http('detailPointsShare.pointsShare', {
+					goods_id: that.goodsInfo.id,
+					amount:that.amount
+				}).then(res => {
+					if (res.code === 1) {
+					 that.handleClickCopy(res.data.share_link)
+					}
+					if (res.code == 0) {
+					 
+						that.$u.toast(res.msg);
+					}
+				});
+			},
+			handleClickCopy(content) {
+				let _this = this;
+				uni.setClipboardData({
+					data: String(content), // 必须字符串
+					success: function() {
+						_this.$refs.uToastDetail.show({
+							title: "复制成功",
+							position: 'bottom'
+			
+						})
+					}
+				});
+			},
 			// goBack
 			// 微信直播商品跳转详情，需要用小程序原生接口才能返回。
 			goBack() {

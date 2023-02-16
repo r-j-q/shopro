@@ -1,16 +1,16 @@
 <!-- 商品列表 -->
 <template>
-	<view class="">
+	<view class="pages-">
 		<view class="mission-content">
 			<view class="mission-c">
 				<view class="mission-l">
 					<u-search placeholder="搜索商品" shape="square" height="100" @custom="bandleSearch" :showAction="true"
 						:animation="true" :clearabled="true" @confirm="confirmData" v-model="keyword"></u-search>
-					<view class="mission-list" v-show="searchText">
+					<!-- <view class="mission-list" v-show="searchText">
 						<view @click="searchTextList" class="mission-list-title"> 搜索的商品搜索的商品搜索的商品搜索的商品搜索的商品搜索的商品 </view>
 						<view @click="searchTextList" class="mission-list-title"> 搜索的商品 </view>
 						<view @click="searchTextList" class="mission-list-title"> 搜索的商品 </view>
-					</view>
+					</view> -->
 				</view>
 				<button @click="navigatorToLine" class="mission-r">赚元宝</button>
 			</view>
@@ -18,23 +18,24 @@
 				<u-swiper height="300" :list="list"></u-swiper>
 			</view>
 			<view class="mission-center">
-				 <shType @handleShowMore="handleShowMore"/>
+				 <shType :current="cat_id" :taskCategorylist="taskCategorylist" @changeActive="changeActive" @handleShowMore="handleShowMore"/>
 				 
 			</view>
 		</view>
 		<shTypeBtn :listTabs="listTabsShai" :currentShai="currentShai" @tabActive="tabActive"/>
-		<goodsList /> 
-		
+		<goodsListvip :ploutoUrl="ploutoUrl" :taskPointsLists="taskPointsLists"/> 
+		<noData v-if="taskPointsLists.length==0"/>
 		<!-- 领取弹窗 -->
 		<u-popup :mask="true" v-model="isHandleShowMore" :borderRadius="0" mode="top" >
 			<view class="isHandleShowMorePadding">
+				<!-- <shType :current="cat_id" :taskCategorylist="taskCategorylist" @changeActive="changeActive" @handleShowMore="handleShowMore"/> -->
 				 <shTypeBtn  :listTabs="listTabsShai" :currentShai="currentShai" @tabActive="tabActive"/>
 				 <view class="isMorePaddingList">
-				 	<view @click.stop="getIsMorePaddingList(flag)" class="isMorePstyle" :class="flag.id==typeId?'isMoreBackground':''" v-for="(flag,i) in listTabs" :key="i">{{flag.name}}</view>
+				 	<view @click.stop="getIsMorePaddingList(flag)" class="isMorePstyle" :class="flag.id==cat_id?'isMoreBackground':''" v-for="(flag,i) in taskCategorylist" :key="i">{{flag.name}}</view>
 				 	 
 				 </view>
 				 <view class="isMorePaddingBottom">
-				 	<view class="isMorePaddingBottom0">
+				 	<view class="isMorePaddingBottom0" @click="Reset">
 				 		重置
 				 	</view>
 					<view class="isMorePaddingBottom1">
@@ -53,31 +54,38 @@
 		mapActions,
 		mapState
 	} from 'vuex';
-	import goodsList from '../../components/juzheng/taskHallDetails/goodsList.vue';
+	import goodsListvip from '../../components/juzheng/taskHallDetails/goodsListvip.vue';
 	import shType from '../../components/juzheng/taskHallDetails/sh-type.vue';
 	import shTypeBtn from '../../components/juzheng/taskHallDetails/sh-type-btn.vue';
- 
+	import noData from '../../components/juzheng/noData.vue';
+	 
+ import {plouto_url} from "@/shopro/utils/config.js"
 	let systemInfo = uni.getSystemInfoSync();
 	export default {
 		components: {
-			goodsList,
+			goodsListvip,
 			shType,
-			shTypeBtn
+			shTypeBtn,
+			noData
 		},
 		data() {
 			return {
-				
+				ploutoUrl:'',
 				listTabsShai: [{
 					name: '综合',
+					order:"",
 					id: 0
 				}, {
 					name: '佣金',
+					order:"commission",
 					id: 1
 				}, {
 					name: "上架时间",
+					order:'createtime',
 					id: 2
 				}, {
-					name: "积分",
+					name: "元宝",
+					order:'points',
 					id: 3
 				}, {
 					name: "筛选",
@@ -89,7 +97,7 @@
 				isHandleShowMore:false,//更多类型弹窗
 				searchText: false,
 
-				keyword: '',
+				 
 				typeId:0,//更多类型ID
 				listTabs: [{
 					name: '全部',
@@ -101,7 +109,6 @@
 					name: "食品",
 					id:2
 				}],
-				current: 0,
 				list: [{
 						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
 						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
@@ -114,22 +121,77 @@
 						image: 'https://cdn.uviewui.com/uview/swiper/3.jpg',
 						title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
 					}
-				]
+				], 
+				cat_id:"",
+				keyword:"",
+				page:1,
+				order:"",
+				sort:'desc',
+				taskCategorylist:[],
+				taskPointsLists:[],//列表
 
 			};
 		},
 		// 触底加载更多
 		onReachBottom() {},
-		onLoad() {},
+		onLoad() {
+			this.getTaskCategory()
+			this.getTaskPointsList()
+		},
+		onShow() {
+			this.ploutoUrl = plouto_url
+		console.log("B22222222222ASE_URL",plouto_url)	
+		},
 		methods: {
+			changeActive(v){
+			this.cat_id =v.id
+			// this.current =	v.id
+			this.getTaskPointsList()
+			},
+			// 会员专区顶部分类  
+			getTaskCategory() {
+				let that = this;
+				that.loadStatus = 'loadmore';
+				that.$http('vips.taskCategory', {}).then(res => {
+					// that.cat_id =res.data[0].id
+				 that.taskCategorylist =res.data
+				 that.taskCategorylist.unshift({
+					 name:'全部',
+					 id:'',
+					 cat_id:''
+				 })
+					console.log("=======会员专区顶部分类======>", res.data)
+				});
+			}, 
+			// 会员专区列表 
+			getTaskPointsList() {
+				let that = this;
+				that.loadStatus = 'loadmore';
+				that.$http('vips.taskPointsList', {
+					cat_id:that.cat_id,
+					keyword:that.keyword,
+					page:that.page,
+					order:that.order,
+					sort:that.sort,
+					rows:10,
+				}).then(res => {
+				 that.taskPointsLists = res.data.data
+					console.log("=======会员专区列表======>", res.data.data)
+				});
+			}, 
+			 
 			tabActive(item) {
-				console.log(item.id);
-				this.currentShai = item.id
+				console.log(item.order);
+				this.order= item.order;
+				this.currentShai = item.id;
+				this.getTaskPointsList()
 			},
 			change() {},
 			// 点击收缩时触发
 			bandleSearch() {
-				this.searchText = !this.searchText
+				// this.keyword=
+				// this.searchText = !this.searchText;
+				this.getTaskPointsList()
 				console.log("----", this.keyword)
 			},
 			searchTextList() {
@@ -148,7 +210,17 @@
 			},
 			// 点击更多类型
 			getIsMorePaddingList(v){
-				 this.typeId = v.id
+				 this.cat_id = v.id
+				 this.getTaskPointsList()
+			},
+			// 重置筛选数据
+			Reset(){
+				this.cat_id=""
+				this.keyword=""
+				this.page=1
+				this.order=""
+				this.sort='desc'
+				this.currentShai =0 //佣金tab重置
 			}
             
 		}
@@ -157,6 +229,10 @@
 </script>
 
 <style lang="scss">
+	.pages-{
+		min-height: 100%;
+		// background-color: #fff;
+	}
 	.paddingTop20{
 		padding-top: 20upx;
 	}
@@ -270,7 +346,7 @@
 		}
 
 		.mission-r {
-			width: 20%;
+			width: 22%;
 			height: 100upx;
 			line-height: 100upx;
 			font-size: 16px;

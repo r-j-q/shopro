@@ -1,16 +1,16 @@
 <!-- 商品列表 -->
 <template>
-	<view class="">
+	<view class="pages-">
 		<view class="mission-content">
 			<view class="mission-c">
 				<view class="mission-l">
 					<u-search placeholder="搜索商品" shape="square" height="100" @custom="bandleSearch" :showAction="true"
-						:animation="true" :clearabled="true" @confirm="confirmData" v-model="keyword"></u-search>
-					<view class="mission-list" v-show="searchText">
+						:animation="true" :clearabled="true"   v-model="keyword"></u-search>
+					<!-- <view class="mission-list" v-show="searchText">
 						<view @click="searchTextList" class="mission-list-title"> 搜索的商品搜索的商品搜索的商品搜索的商品搜索的商品搜索的商品 </view>
 						<view @click="searchTextList" class="mission-list-title"> 搜索的商品 </view>
 						<view @click="searchTextList" class="mission-list-title"> 搜索的商品 </view>
-					</view>
+					</view> -->
 				</view>
 				<button @click="navigatorToLine" class="mission-r">赚现金</button>
 			</view>
@@ -29,14 +29,15 @@
 				</view> -->
 			<!-- </view> -->
 		</view>
-		<goodsListVue @getCodeGoods="getCodeGoods" />
+		<goodsListVue @getCodeGoods="getCodeGoods" @getTaskOrder="getTaskOrder" :ploutoUrl="ploutoUrl" :missionList="missionList" />
+		<noData v-if="missionList.length==0"/>
 		<!-- 领取弹窗 -->
 		<u-popup v-model="getShow" :borderRadius="10" mode="center" @close="close" @open="open">
 			<view>
 				<view class="modeReceive0">
 					<view class="modeReceiveTitle"> 已领取，请联系客服～</view>
 					<view class="modeReceiveTitle2">
-					   <image :src="erweima" mode=""></image>
+						<image :src="erweima" mode=""></image>
 					</view>
 					<view class="modeReceiveTitle3">
 						保存到相册，微信扫一扫联系客服
@@ -48,21 +49,27 @@
 </template>
 
 <script>
+	// missionHall.task
 	import {
 		mapMutations,
 		mapActions,
 		mapState
 	} from 'vuex';
 	import goodsListVue from '../../components/juzheng/goodsList.vue';
-
+	import noData from '../../components/juzheng/noData.vue';
+  import {plouto_url} from "@/shopro/utils/config.js"
 	let systemInfo = uni.getSystemInfoSync();
 	export default {
 		components: {
-			goodsListVue
+			goodsListVue,
+			noData
 		},
 		data() {
 			return {
-				erweima:require('../../static/images/mine/erweima.png'),
+				ploutoUrl:'',
+				erweima: require('../../static/images/mine/erweima.png'),
+				erweima2: require('../../static/images/mine/1676329905397.jpg'),
+				 
 				getShow: false, //领取弹窗
 				searchText: false,
 				countId: 1,
@@ -74,14 +81,51 @@
 					name: "视频任务",
 					id: 1
 				}],
-				current: 0
+				current: 0,
+				missionList: []
 
 			};
 		},
 		// 触底加载更多
 		onReachBottom() {},
-		onLoad() {},
+		onLoad() {
+			this.getTeams()
+		},
+		onShow() {
+			this.ploutoUrl = plouto_url
+		console.log("B22222222222ASE_URL",plouto_url)	
+		},
 		methods: {
+			// 团队列表 taskDetail
+			getTeams() {
+				let that = this;
+				that.loadStatus = 'loadmore';
+				that.$http('missionHall.task', {
+					page: 1,
+					rows: 10,
+					sort: 'asc',
+					keyword: this.keyword,
+					order: "id"
+				}).then(res => {
+					if (res.data.data) {
+						this.missionList = res.data.data
+					}
+					console.log("=======missionHall.task======>", res.data.data)
+				});
+			},
+			// 抢单
+			getTaskOrder(id) {
+				let that = this;
+				that.$http('missionHall.taskOrder', {
+					id
+                 }).then(res => {
+                   if(res.code==1){
+					   uni.showToast({
+					   	title:res.msg
+					   })
+				   }
+				})
+			},
 			close() {},
 			open() {},
 			getCodeGoods() {
@@ -92,7 +136,8 @@
 			change() {},
 			// 点击收缩时触发
 			bandleSearch() {
-				this.searchText = !this.searchText
+				// this.keyword = !this.searchText;
+				this.getTeams()
 				console.log("----", this.keyword)
 			},
 			searchTextList() {
@@ -103,7 +148,7 @@
 			},
 			navigatorToLine() {
 				uni.navigateTo({
-					url: "/pages/dkdetail/rwOrder"
+					url: `/pages/dkdetail/rwOrder`
 				})
 				console.log("9999")
 			},
@@ -114,6 +159,10 @@
 </script>
 
 <style lang="scss">
+	// .pages-{
+	// 	min-height: 100%;
+	// 	background-color: #fff;
+	// }
 	.mission-center-center {
 		width: 500upx;
 		height: 100upx;
@@ -127,12 +176,12 @@
 
 	}
 
-	 
+
 
 	.center1 {
 		width: 250upx;
 		height: 100upx;
-		 
+
 		text-align: center;
 		line-height: 100upx;
 		color: #999;
@@ -263,41 +312,44 @@
 
 		}
 	}
+
 	.modeReceive0 {
 		// overflow: hidden;
 		width: 600upx;
-		border-radius: 18upx; 
+		border-radius: 18upx;
 		padding-bottom: 60upx;
-	
+
 	}
-	
+
 	.modeReceiveTitle {
 		text-align: center;
-	
+
 		background-color: #9E8DDE;
 		padding: 40upx 0;
 		color: #fff;
 		// border-top-left-radius: 20upx !important;
 		// border-top-right-radius: 20upx !important;
-	
+
 	}
-	
+
 	.modeReceiveTitle2 {
-		 
+
 		width: 400upx;
 		height: 400upx;
 		margin: 0 auto;
 		margin: 40upx auto;
 		background-color: yellow;
 	}
-	.modeReceiveTitle2 image{
+
+	.modeReceiveTitle2 image {
 		width: 100%;
 		height: 100%;
 	}
-	.modeReceiveTitle3{
+
+	.modeReceiveTitle3 {
 		background: #363636;
 		border-radius: 10px;
-		color:#fff;
+		color: #fff;
 		font-size: 12px;
 		width: 560upx;
 		margin: 0 auto;

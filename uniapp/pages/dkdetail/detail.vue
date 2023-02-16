@@ -11,28 +11,28 @@
 
 		<!-- 标题 -->
 		<view class="detailTitle bcg">
-			<h3>杨先生黑芝麻芡实糕八珍杨先生黑芝麻芡实糕八珍杨先生黑芝麻芡实糕八珍</h3>
+			<h3>{{qb.goods_name}}</h3>
 		</view>
 		<view class="deatilSY bcg">
 			<view class="deatilSY0">
 				<view class="colorc4"> 带货价</view>
-				<view class="colorc5 fontW font20 mt"> ¥19.90</view>
+				<view class="colorc5 fontW font20 mt"> ¥{{qb.price}}</view>
 			</view>
 			<view class="deatilSY0">
 				<view class="colorc4"> 预估收益</view>
-				<view class="colorc5 fontW font20 mt"> ¥19.90</view>
+				<view class="colorc5 fontW font20 mt"> ¥{{qb.reward}}</view>
 			</view>
-			<view class="deatilSY0">
+			<!-- <view class="deatilSY0">
 				<view class="colorc4"> 获取积分</view>
-				<view class="colorc5 fontW font20 mt"> 90</view>
-			</view>
+				<view class="colorc5 fontW font20 mt"> {{qb.reward}}</view>
+			</view> -->
 			<view class="deatilSY0">
 				<view class="colorc4"> 佣金</view>
-				<view class="colorc5 fontW font20 mt"> ¥19.90</view>
+				<view class="colorc5 fontW font20 mt"> ¥{{qb.commission}}</view>
 			</view>
 			<view class="deatilSY0">
 				<view class="colorc4"> 公开</view>
-				<view class="colorc4 mt"> 90%</view>
+				<view class="colorc4 mt"> {{qb.public}}%</view>
 			</view>
 		</view>
 		<view class="bcg">
@@ -50,7 +50,7 @@
 					</view>
 				</view>
 				<view class="deatil6">
-					<view class="deatilList colorc4">
+					<view class="deatilList colorc4"  @tap="handleClickCopy(qb.link)">
 						<u-icon name="bookmark-fill" size="40rpx"></u-icon>
 						<view class="deatilListText">复制</view>
 					</view>
@@ -59,41 +59,45 @@
 		</view>
 		<view class="bcg">
 			<view class="">
-				<uni-view class="item-title">更换图标</uni-view>
+				<uni-view class="item-title">带货要求</uni-view>
 				<view class="colorc4 pdl ptrb">
-					<h4 class="pdl mt">抖音账号粉丝≥5000</h4>
+					<h4 class="pdl mt">抖音账号粉丝≥{{qb.fans_required}}</h4>
 				</view>
 			</view>
 			<view class="">
 				<uni-view class="item-title">奖励规则</uni-view>
 				<view class="colorc4 pdl ptrb">
-					<h4 class="pdl mt">粉丝数5000～10000奖励3.00元</h4>
-					<h4 class="pdl mt">粉丝数10001～30000奖励4.00元</h4>
-					<h4 class="pdl mt">粉丝数30001～1000000奖励5.00元</h4>
+					<h4 v-if="qb.award" class="pdl mt" v-for="(items,index) in qb.award" :key="index">{{items}}</h4>
+					 
 				</view>
 			</view>
 			<view class="">
 				<uni-view class="item-title">任务要求</uni-view>
 				<view class="colorc4 pdl ptrb">
-
+ 
+					<h4 v-if="qb.award" class="pdl mt" v-for="(itemsRequired,s) in qb.required" :key="s">{{itemsRequired}}</h4>
 				</view>
 			</view>
-			<view class="">
+		<!-- 	<view class="">
 				<uni-view class="item-title">视频文案</uni-view>
 				<view class="colorc4 pdl ptrb">
 
 				</view>
-			</view>
+			</view> -->
 			<view class="">
 				<uni-view class="item-title">视频展示</uni-view>
 				<view class="colorc4 pdl ptrb">
-
+				<!-- <u-swiper
+					:list="list4"
+					keyName="url"
+					:autoplay="false"
+					></u-swiper> -->
 				</view>
 			</view>
 			<view class="">
 				<uni-view class="item-title">带货流程</uni-view>
-				<view class="colorc4 pdl ptrb">
-
+				<view class="colorc4 pdl ptrb daihuo">
+                   <image :src="details" mode=""></image>
 				</view>
 			</view>
 
@@ -103,19 +107,9 @@
 				<h4>宝贝详情</h4>
 			</center>
 			<view style="height: 30px;"> </view>
-			<view class="detailbaobeiImg">
-				<image mode="widthFix"
-					src="https://p26-item.ecombdimg.com/img/ecom-shop-material/v1_hRvdnMEv_71182650133071629160412_115a8e1e4b2b2a9762333ef49edfdd0c_sx_301116_www790-1302~tplv-5mmsx3fupr-resize:790:1302.jpeg">
-				</image>
-				<image mode="widthFix"
-					src="https://p26-item.ecombdimg.com/img/ecom-shop-material/v1_hRvdnMEv_71182650133071629160412_115a8e1e4b2b2a9762333ef49edfdd0c_sx_301116_www790-1302~tplv-5mmsx3fupr-resize:790:1302.jpeg">
-				</image>
-				<image mode="widthFix"
-					src="https://p26-item.ecombdimg.com/img/ecom-shop-material/v1_hRvdnMEv_71182650133071629160412_115a8e1e4b2b2a9762333ef49edfdd0c_sx_301116_www790-1302~tplv-5mmsx3fupr-resize:790:1302.jpeg">
-				</image>
-				<image mode="widthFix"
-					src="https://p26-item.ecombdimg.com/img/ecom-shop-material/v1_hRvdnMEv_71182650133071629160412_115a8e1e4b2b2a9762333ef49edfdd0c_sx_301116_www790-1302~tplv-5mmsx3fupr-resize:790:1302.jpeg">
-				</image>
+			<view class="detailbaobeiImg"> 
+				<rich-text :nodes="qb.content" class="content"></rich-text> 
+				 
 			</view>
 		</view>
 
@@ -131,7 +125,7 @@
 					一键剪辑
 				</view>
 			</view>
-			<view class="footerShare1 bacf5" @tap="handleClickCopy('9999')">
+			<view class="footerShare1 bacf5" @tap="handleClickCopy(qb.link)">
 				<view class="footerShare2">
 					复制商品链接
 				</view>
@@ -139,7 +133,7 @@
 			</view>
 		</view>
 
-		<qrcode-poster ref="poster" :title="title" :subTitle="subTitle" :headerImg="headerImg" :content="content">
+		<qrcode-poster ref="poster" :erweima2="erweima2" :subTitleType="subTitleType" :title="title" :subTitle="subTitle" :headerImg="headerImg" :content="content">
 		</qrcode-poster>
 		<u-toast ref="uToastDetail"></u-toast>
 	</view>
@@ -147,6 +141,7 @@
 
 <script>
 	import QrcodePoster from '@/components/poster/poster.vue'
+	import {plouto_url} from "@/shopro/utils/config.js"
 	export default {
 
 		components: {
@@ -154,30 +149,68 @@
 		},
 		data() {
 			return {
-				headerImg: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
+				headerImg: '',
+				details:require('../../static/images/mine/details.png'),
+				erweima2: require('../../static/images/mine/1676329905397.jpg'),
 				title: '测试标题',
 				subTitle: '测试标题',
+				subTitleType:"",
 				content: "",
-
-				list: [{
-						image: 'https://cdn.uviewui.com/uview/swiper/1.jpg',
-						title: '昨夜星辰昨夜风，画楼西畔桂堂东'
-					},
-					{
-						image: 'https://cdn.uviewui.com/uview/swiper/2.jpg',
-						title: '身无彩凤双飞翼，心有灵犀一点通'
-					},
-					{
-						image: 'https://cdn.uviewui.com/uview/swiper/3.jpg',
-						title: '谁念西风独自凉，萧萧黄叶闭疏窗，沉思往事立残阳'
-					}
-				]
+                 ploutoUrl:"",
+				list: [],
+				qb:{},
+				list4: [{
+				                    url: 'https://cdn.uviewui.com/uview/resources/video.mp4',
+				                    title: '昨夜星辰昨夜风，画楼西畔桂堂东',
+				                    poster: 'https://cdn.uviewui.com/uview/swiper/swiper1.png',
+				                    type: 'video'
+				                }],
 			}
 		},
-
+    onLoad(option) {
+    	if(option.id){
+			// console.log("=======任务详情======>", option.id)
+			this.getTaskDetail(option.id)
+		}
+    },
+	onShow() {
+	this.ploutoUrl = plouto_url	
+	},
 		methods: {
+			
+			// 任务详情  
+			getTaskDetail(id) {
+				let that = this;
+				// that.loadStatus = 'loadmore';
+				that.$http('missionHall.taskDetail', {
+					 id:id
+				}).then(res => {
+				that.title =res.data.goods_name
+				  that.qb =  res.data; 
+				  let listImage =res.data.images
+				   
+				  listImage.forEach((item)=>{
+				that.list.push({
+					image:plouto_url+item
+				})	  
+				  })
+				  this.headerImg =plouto_url+ res.data.image;
+				this.subTitleType=  res.data.type_txt
+				  
+				  // var richtext=  that.qb.content;
+				  // const regex = new RegExp('<img', 'gi');
+				  // richtext = richtext.replace(regex, `<img style="max-width:100%;height:auto;display:block;"`);
+				  // that.qb.content = richtext;
+				 
+				   // that.list =res.data.images
+
+					console.log("=======任务详情======>", that.list)
+				});
+			},
+			
+			
 			test() {
-				this.$refs.poster.showCanvas(this.headerImg,  'https://cdn.uviewui.com/uview/swiper/2.jpg')
+				this.$refs.poster.showCanvas(this.headerImg,  this.qb.image)
 			},
 			nativeGetTo() {
 				uni.navigateBack()
@@ -295,6 +328,12 @@
 	.ptrb {
 		padding: 40upx 0 40upx 0;
 	}
+	.daihuo image{
+		width: 90%;
+		display: block;
+		margin: 0 auto;
+		height: 120upx;
+	}
 
 	// 右侧title
 	.item-title {
@@ -318,11 +357,12 @@
 
 	.detailbaobei {
 		padding: 40upx 20upx;
+		padding-bottom: 200upx;
 
 	}
 
 	.detailbaobeiImg,
-	.detailbaobeiImg image {
+	.detailbaobeiImg image ,.detailbaobeiImg img {
 		width: 100%;
 		display: flex;
 		flex-direction: column;

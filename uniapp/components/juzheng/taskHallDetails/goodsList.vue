@@ -1,8 +1,8 @@
 <template>
-	<view class="goodsList" @click="nagatorToDetail">
+	<view class="goodsList" >
 		<view class="goodsListTopVipList">
 
-			<view class="goodsListTopVip" v-for="(item,index) in listData" :key="index">
+			<view class="goodsListTopVip" @click="nagatorToDetail(item.id)" v-for="(item,index) in listData" :key="index">
 				<view class="goodsListTopImg">
 					<image :src="item.name" alt="" srcset="">
 				</view>
@@ -132,9 +132,9 @@
 
 				console.log("000", this.listData);
 			},
-			nagatorToDetail() {
+			nagatorToDetail(id) {
 				uni.navigateTo({
-					url: "/pages/dkdetail/detail"
+					url: "/pages/dkdetail/detail?id="+id
 				})
 			}
 

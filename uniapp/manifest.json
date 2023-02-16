@@ -157,7 +157,13 @@
                 }
             },
             "splashscreen" : {
-                "useOriginalMsgbox" : false
+                "useOriginalMsgbox" : false,
+                "androidStyle" : "default",
+                "android" : {
+                    "hdpi" : "static/images/starimg/1.png",
+                    "xhdpi" : "static/images/starimg/2.png",
+                    "xxhdpi" : "static/images/starimg/3.png"
+                }
             }
         },
         "kernel" : {

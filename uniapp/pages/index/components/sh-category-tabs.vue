@@ -297,6 +297,7 @@ export default {
 }
 .category-tabs-wrap {
 	min-height: 1000rpx;
+	// margin-top: 40upx;
 	// 吸顶
 	.u-sticky-wrap {
 		background-color: #fff;
@@ -329,7 +330,7 @@ export default {
 			color: #333333;
 		}
 		.title-active {
-			color: #a8700d;
+			color: #7C75F5;
 		}
 		.tab-des {
 			font-size: 22rpx;

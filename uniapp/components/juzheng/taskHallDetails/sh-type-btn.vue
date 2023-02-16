@@ -1,7 +1,7 @@
 <template>
 	<view class="zuiwaicheng">
 		<view class="mission-center-center">
-			<view class="center1  borderL1" @click="tabActives(item)" :class="currentShai == index ?'bgcolor':''"
+			<view class="center1  borderL1" @click="tabActives(item)" :class="currentShai == item.id ?'bgcolor':''"
 				v-for="(item,index) in listTabs" :key="index">
 				{{item.name}}
 				<topBottomJiantou :Index="index" :current="currentShai"/>
@@ -52,7 +52,7 @@
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		justify-content: space-between;
+		// justify-content: space-between;
 
 
 

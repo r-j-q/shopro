@@ -67,6 +67,9 @@
 				}, {
 					name: '订单列表',
 					id: 1
+				}, {
+					name: '积分订单',
+					id: 2
 				}],
 				current: 0,
 				logo: require('../../static/images/mipmap-xhdpi/ic_logo.jpg'),

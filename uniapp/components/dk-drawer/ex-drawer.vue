@@ -223,6 +223,7 @@
 	.list_style_ {
 		color: #333;
 		font-weight: bold;
+		font-size: 28upx;
 	}
 
 	.listImage {

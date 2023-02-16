@@ -6,19 +6,18 @@
  * @property {Function} requestAfter = 私有方法，请求后
  */
 import {
-	API_URL,
-	BASE_RICHTEXTS
+	API_URL 
 } from '@/env'
 import platform from '@/shopro/platform/index';
 export default class Request {
 	constructor() {
 		console.log("------->",API_URL)
-		console.log("----2--->",BASE_RICHTEXTS)
+		// console.log("----2--->",BASE_RICHTEXTS)
 		// 默认配置
 		this.config = {
 			baseUrl: API_URL,
 			header: {
-				'content-type': 'application/json',
+				'content-type': 'application/json;multipart/form-data',
 				'platform': platform.get()
 			},
 			url: '',
